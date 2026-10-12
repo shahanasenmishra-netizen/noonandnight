@@ -1,0 +1,2255 @@
+<title>Noon &amp; Night Website</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&amp;family=Jost:wght@300;400;500&amp;display=swap">
+<style>
+/* Layout: a six-scene film opens the day; the page then runs Noon (ivory) into Night (aubergine). */
+:root{
+  --ivory:#F7F3EC; --paper:#FCFAF6; --mist:#E7EADF; --blush:#F2DCE6;
+  --ink:#2B2628; --ink-soft:#66605F; --hair:#D8D6CB;
+  --sage:#9CAF94; --sage-deep:#4F6B4A;
+  --magenta:#8E1F5E; --magenta-bright:#E07AAE; --gold:#D9B36A;
+  --night:#1E1A1D; --night-raised:#2A2328; --linen:#F4EFE8; --linen-soft:#BDB4B0; --night-hair:#3D343A;
+  --display:"Cormorant Garamond", Cormorant, Garamond, Georgia, serif;
+  --body:Jost, "Century Gothic", Futura, system-ui, sans-serif;
+  --gutter:clamp(16px, 4vw, 56px);
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html.intro-on, html.intro-on body{overflow:hidden}
+body{background:var(--ivory); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased; overflow-x:hidden}
+img{max-width:100%; display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--magenta); outline-offset:3px}
+.dark-zone :focus-visible, .intro :focus-visible{outline-color:var(--magenta-bright)}
+h1,h2,h3{font-family:var(--display); font-weight:500; margin:0; text-wrap:balance; letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:1320px; margin-inline:auto; padding-inline:var(--gutter)}
+.eyebrow{font-size:12px; line-height:16px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft)}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; padding:0 30px; font-family:var(--body); font-size:14px; font-weight:500; letter-spacing:.06em; text-decoration:none; border:1px solid transparent; cursor:pointer; transition:background .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease)}
+.btn-primary{background:var(--magenta); color:var(--ivory)}
+.btn-primary:hover{background:#741A4D}
+.btn-ghost{border-color:currentColor; background:transparent}
+.btn-ghost:hover{background:var(--ink); color:var(--ivory); border-color:var(--ink)}
+.btn-linen{background:var(--linen); color:var(--ink)}
+.btn-linen:hover{background:#FFFFFF}
+.btn-ghost-linen{border-color:var(--linen); color:var(--linen); background:transparent}
+.btn-ghost-linen:hover{background:var(--linen); color:var(--ink)}
+.arrow{width:18px; height:18px; flex:none; transition:transform .5s var(--ease)}
+a:hover .arrow, button:hover .arrow{transform:translateX(4px)}
+.textlink{display:inline-flex; align-items:center; gap:10px; min-height:44px; font-size:14px; font-weight:500; letter-spacing:.06em; text-decoration:none; border-bottom:1px solid currentColor; align-self:flex-start; background:none; border-top:0; border-left:0; border-right:0; color:inherit; font-family:var(--body); cursor:pointer; padding:0 0 2px}
+.dot{width:9px; height:9px; border-radius:50%; background:var(--sage); flex:none; display:inline-block}
+.crescent{width:11px; height:11px; border-radius:50%; box-shadow:inset -3px 1px 0 0 var(--magenta-bright); flex:none; display:inline-block}
+
+/* Photo frames: numbered to match the shot list */
+.ph{position:relative; overflow:hidden; background:var(--tone,var(--mist)); margin:0; max-width:100%}
+.ph-media{position:absolute; inset:0}
+.ph-media::before{content:""; position:absolute; inset:0; background:radial-gradient(120% 90% at 78% 12%, rgba(255,255,255,.38), rgba(255,255,255,0) 60%), linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.12))}
+.ph-media::after{content:""; position:absolute; inset:0; background-image:var(--grain); opacity:.09; mix-blend-mode:overlay}
+.ph-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.ph figcaption{position:absolute; left:18px; right:18px; top:16px; font-size:11px; line-height:1.4; letter-spacing:.08em; text-transform:uppercase; color:var(--cap,var(--ink)); opacity:.75}
+.tone-sage{--tone:#9CAF94; --cap:#2B2628}
+.tone-mist{--tone:#DCE2D2; --cap:#2B2628}
+.tone-olive{--tone:#B9C2A6; --cap:#2B2628}
+.tone-sand{--tone:#E6DAC6; --cap:#2B2628}
+.tone-blush{--tone:#EBCBD9; --cap:#2B2628}
+.tone-magenta{--tone:#7A1A51; --cap:#F4EFE8}
+.tone-dusk{--tone:#4A2238; --cap:#F4EFE8}
+.tone-plum{--tone:#5B2A47; --cap:#F4EFE8}
+.tone-night{--tone:#342A32; --cap:#F4EFE8}
+
+/* ---------- Intro film ---------- */
+.intro{position:fixed; inset:0; z-index:100; background:var(--night); color:var(--linen); overflow:hidden; cursor:pointer; transition:opacity .9s var(--ease), visibility .9s}
+.intro.out{opacity:0; visibility:hidden}
+.intro-video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .8s var(--ease)}
+.intro.has-video .intro-video{opacity:1}
+.intro.has-video .scene .bg, .intro.has-video .scene .sweep{opacity:0}
+.scene.quiet .scene-copy h2, .scene.quiet .scene-wear{display:none}
+.scene{position:absolute; inset:0; opacity:0; transition:opacity 1.2s var(--ease)}
+.scene.on{opacity:1}
+.scene .bg{position:absolute; inset:0; background:var(--tone); transform:scale(1.14); transition:transform 5.2s cubic-bezier(.2,.5,.3,1)}
+.scene.on .bg{transform:scale(1)}
+.scene .bg::before{content:""; position:absolute; inset:0; background:var(--light)}
+.scene .bg::after{content:""; position:absolute; inset:0; background-image:var(--grain); opacity:.12; mix-blend-mode:overlay}
+.scene .bg .ph-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+.scene .veil{position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,16,19,.35) 0%, rgba(20,16,19,0) 30%, rgba(20,16,19,0) 45%, rgba(20,16,19,.78) 100%)}
+.scene .sweep{position:absolute; inset:-20%; background:linear-gradient(105deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.16) 50%, rgba(255,255,255,0) 60%); transform:translateX(-60%); opacity:0}
+.scene.on .sweep{animation:sweep 3.2s var(--ease) .2s both}
+.scene-copy{position:absolute; left:var(--gutter); right:var(--gutter); bottom:clamp(150px,24vh,260px); display:flex; flex-direction:column; gap:14px; max-width:880px}
+.scene-copy > *{opacity:0; transform:translateY(26px); transition:opacity .9s var(--ease), transform 1.1s var(--ease)}
+.scene.on .scene-copy > *{opacity:1; transform:none}
+.scene.on .scene-copy > :nth-child(2){transition-delay:.15s}
+.scene.on .scene-copy > :nth-child(3){transition-delay:.35s}
+.scene-time{display:inline-flex; gap:12px; align-items:center; font-size:12px; font-weight:500; letter-spacing:.2em; text-transform:uppercase}
+.scene-copy h2{font-size:clamp(44px,7vw,108px); line-height:.95; text-shadow:0 2px 30px rgba(20,16,19,.35)}
+.scene-copy h2 em{font-style:italic; font-weight:400}
+.scene-wear{display:inline-flex; gap:12px; align-items:center; font-size:16px; font-weight:300; color:#EDE5DC}
+.scene-wear b{font-weight:500}
+.scene-shot{position:absolute; right:var(--gutter); top:calc(84px + env(safe-area-inset-top,0px)); max-width:280px; text-align:right; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:rgba(244,239,232,.6)}
+.intro-top{position:absolute; left:var(--gutter); right:var(--gutter); top:calc(22px + env(safe-area-inset-top,0px)); display:flex; align-items:center; justify-content:space-between; gap:20px; z-index:3}
+.intro-top img{height:30px; width:auto}
+.skip{min-height:44px; padding:0 20px; border:1px solid rgba(244,239,232,.55); background:rgba(30,26,29,.25); color:var(--linen); font-family:var(--body); font-size:13px; letter-spacing:.08em; cursor:pointer; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px)}
+.skip:hover{background:var(--linen); color:var(--ink)}
+.segs{position:absolute; left:var(--gutter); right:var(--gutter); bottom:calc(32px + env(safe-area-inset-bottom,0px)); display:grid; grid-template-columns:repeat(6, minmax(0,1fr)); gap:8px; z-index:3}
+.seg{height:2px; background:rgba(244,239,232,.28); overflow:hidden}
+.seg span{display:block; height:100%; width:0; background:var(--linen)}
+.seg.full span{width:100%}
+.seg.run span{animation:fill var(--dur,3.8s) linear forwards}
+.intro-hint{position:absolute; left:0; right:0; bottom:calc(46px + env(safe-area-inset-bottom,0px)); text-align:center; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgba(244,239,232,.7); z-index:3}
+.finale{position:absolute; inset:0; display:grid; place-items:center; text-align:center; background:var(--night); opacity:0; transition:opacity 1s var(--ease); padding-inline:var(--gutter)}
+.finale.on{opacity:1}
+.finale-in{display:flex; flex-direction:column; align-items:center; gap:22px}
+.finale img{height:clamp(120px,18vw,180px); width:auto; opacity:0; transform:scale(.94); transition:opacity 1.2s var(--ease) .2s, transform 1.6s var(--ease) .2s}
+.finale p{font-family:var(--display); font-style:italic; font-size:clamp(26px,3vw,38px); opacity:0; transition:opacity 1s var(--ease) .7s}
+.finale.on img{opacity:1; transform:none}
+.finale.on p{opacity:1}
+
+/* ---------- Header ---------- */
+.hdr{position:fixed; inset:0 0 auto 0; z-index:50; padding-top:env(safe-area-inset-top,0px); color:var(--linen); border-bottom:1px solid transparent; transition:background .5s var(--ease), border-color .5s var(--ease), color .5s var(--ease)}
+.hdr.solid{background:rgba(247,243,236,.9); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom-color:var(--hair); color:var(--ink)}
+.hdr.solid.dark{background:rgba(30,26,29,.86); border-bottom-color:var(--night-hair); color:var(--linen)}
+.hdr-in{height:76px; display:flex; align-items:center; justify-content:space-between; gap:24px}
+.logo{position:relative; display:block; height:32px; min-width:150px}
+.logo img{position:absolute; left:0; top:0; height:32px; width:auto; transition:opacity .5s var(--ease)}
+.logo .on-light{opacity:0}
+.hdr.solid .logo .on-light{opacity:1}
+.hdr.solid .logo .on-dark{opacity:0}
+.hdr.solid.dark .logo .on-light{opacity:0}
+.hdr.solid.dark .logo .on-dark{opacity:1}
+.nav{display:flex; gap:clamp(18px,2.6vw,36px); font-size:14px; font-weight:500; letter-spacing:.04em}
+.nav a{text-decoration:none; position:relative; padding-block:12px}
+.nav a::after{content:""; position:absolute; left:0; right:0; bottom:6px; height:1px; background:currentColor; transform:scaleX(0); transform-origin:left; transition:transform .5s var(--ease)}
+.nav a:hover::after{transform:scaleX(1)}
+.hdr-tools{display:flex; align-items:center; gap:2px}
+.iconbtn{width:44px; height:44px; display:grid; place-items:center; background:none; border:0; color:inherit; cursor:pointer; padding:0}
+.menu-btn{display:none}
+.sheet{display:flex; flex-direction:column; padding-block:8px 24px}
+.sheet a{font-family:var(--display); font-size:30px; line-height:1.3; text-decoration:none; padding-block:6px}
+@media (max-width:900px){ .nav{display:none} .menu-btn{display:grid} }
+
+/* ---------- Hero (resting frame after the film) ---------- */
+.hero{position:relative; display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); min-height:clamp(620px,62vw,860px); background:var(--night); color:var(--linen)}
+.hero .ph{min-height:100%}
+.hero::before{content:""; position:absolute; inset:0 0 auto 0; height:180px; z-index:1; background:linear-gradient(180deg, rgba(20,16,19,.5), rgba(20,16,19,0)); pointer-events:none}
+.hero .ph-media{animation:drift 14s var(--ease) both}
+.hero-copy{position:absolute; inset:auto 0 0 0; padding:0 var(--gutter) clamp(40px,6vw,80px); background:linear-gradient(180deg, rgba(20,16,19,0), rgba(20,16,19,.72) 45%); padding-top:180px}
+.hero-copy .wrap{padding-inline:0; display:flex; flex-direction:column; gap:22px; align-items:flex-start}
+.hero h1{font-size:clamp(50px,7vw,108px); line-height:.96; max-width:14ch}
+.hero h1 em{font-style:italic; font-weight:400; color:#F2BFD8}
+.hero-lede{max-width:34em; font-size:18px; line-height:1.65; font-weight:300; color:#EDE5DC}
+.hero-ctas{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+.replay{display:inline-flex; align-items:center; gap:10px; min-height:44px; padding:0 4px; background:none; border:0; color:var(--linen); font-family:var(--body); font-size:13px; letter-spacing:.08em; cursor:pointer}
+.replay i{width:34px; height:34px; border:1px solid rgba(244,239,232,.6); border-radius:50%; display:grid; place-items:center}
+.hero-tag{position:absolute; top:calc(96px + env(safe-area-inset-top,0px)); display:inline-flex; gap:10px; align-items:center; font-size:12px; font-weight:500; letter-spacing:.18em; text-transform:uppercase; z-index:2}
+.hero-tag.l{left:var(--gutter); color:var(--linen)}
+.hero-tag.r{right:var(--gutter); color:var(--linen)}
+@media (max-width:700px){ .hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr); min-height:680px} .hero-tag{top:auto; bottom:auto} }
+
+/* ---------- Section heads ---------- */
+.sec{padding-block:clamp(88px,10vw,148px)}
+.sec-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; margin-bottom:clamp(32px,4vw,56px)}
+.sec-head > div{display:flex; flex-direction:column; gap:14px; min-width:0; max-width:760px}
+.sec-head h2{font-size:clamp(40px,4.8vw,70px); line-height:1.02}
+.sec-head p.intro-p{color:var(--ink-soft); max-width:36em}
+
+/* ---------- Make it your own ---------- */
+.steps{position:relative; display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:clamp(16px,2vw,28px)}
+.steps-line{position:absolute; left:0; right:0; top:27px; height:1px; background:var(--hair)}
+.steps-line i{position:absolute; inset:0; background:var(--magenta); transform:scaleX(0); transform-origin:left; transition:transform 2.4s var(--ease)}
+.steps.go .steps-line i{transform:scaleX(1)}
+.step{position:relative; display:flex; flex-direction:column; gap:14px; min-width:0}
+.step-num{width:56px; height:56px; border-radius:50%; display:grid; place-items:center; background:var(--ivory); border:1px solid var(--ink); font-family:var(--display); font-size:26px; transition:background .6s var(--ease), color .6s var(--ease), border-color .6s var(--ease)}
+.steps.go .step-num{background:var(--ink); color:var(--ivory)}
+.steps.go .step:nth-child(3) .step-num{transition-delay:.4s}
+.steps.go .step:nth-child(4) .step-num{transition-delay:.8s}
+.steps.go .step:nth-child(5) .step-num{transition-delay:1.2s}
+.steps.go .step:nth-child(6) .step-num{transition-delay:1.6s; background:var(--magenta); border-color:var(--magenta)}
+.step h3{font-size:28px; line-height:1.1}
+.step p{color:var(--ink-soft); font-size:15px; line-height:1.6}
+.step .chips{display:flex; flex-wrap:wrap; gap:6px}
+.step .chips span{font-size:12px; letter-spacing:.04em; padding:4px 10px; border:1px solid var(--hair); border-radius:999px; color:var(--ink)}
+.steps-cta{margin-top:clamp(40px,5vw,64px); display:flex; gap:14px; flex-wrap:wrap}
+@media (max-width:980px){ .steps{grid-template-columns:minmax(0,1fr)} .steps-line{left:27px; right:auto; top:0; bottom:0; width:1px; height:auto} .steps-line i{transform:scaleY(0); transform-origin:top} .steps.go .steps-line i{transform:scaleY(1)} .step{padding-left:80px; min-height:56px} .step-num{position:absolute; left:0; top:0} }
+
+/* ---------- Shop by mood ---------- */
+.moods{display:flex; min-height:clamp(560px,58vw,820px); background:var(--night)}
+.mood{position:relative; flex:1 1 0; display:flex; text-decoration:none; color:var(--linen); overflow:hidden; transition:flex-grow .9s var(--ease)}
+.mood .ph{position:absolute; inset:0}
+.mood .ph-media{transition:transform 1.4s var(--ease)}
+.mood:hover .ph-media{transform:scale(1.04)}
+.mood::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(30,26,29,0) 35%, rgba(30,26,29,.8)); pointer-events:none}
+.mood-copy{position:relative; z-index:2; align-self:flex-end; display:flex; flex-direction:column; gap:14px; padding:clamp(28px,4vw,56px); max-width:560px}
+.mood-copy .eyebrow{color:var(--linen); display:inline-flex; gap:12px; align-items:center}
+.mood h3{font-size:clamp(42px,5vw,76px); line-height:1}
+.mood h3 em{font-style:italic; font-weight:400}
+.mood p{color:#E6DED6}
+.moods-head{background:var(--ivory)}
+@media (hover:hover) and (min-width:901px){ .moods:hover .mood{flex-grow:.8} .moods .mood:hover{flex-grow:1.25} }
+@media (max-width:900px){ .moods{flex-direction:column} .mood{min-height:540px} }
+
+/* ---------- Collections ---------- */
+.filters{display:flex; flex-wrap:wrap; gap:8px}
+.chip{min-height:44px; padding:0 20px; border-radius:999px; border:1px solid var(--hair); background:transparent; color:inherit; font-family:var(--body); font-size:14px; font-weight:500; letter-spacing:.03em; cursor:pointer; transition:background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease)}
+.chip:hover{border-color:currentColor}
+.chip[aria-pressed="true"]{background:var(--ink); color:var(--ivory); border-color:var(--ink)}
+.dark-zone .chip{border-color:var(--night-hair)}
+.dark-zone .chip[aria-pressed="true"]{background:var(--linen); color:var(--night); border-color:var(--linen)}
+#noon .chip[aria-pressed="true"]{background:var(--sage); color:var(--ink); border-color:var(--sage)}
+#noon .chip:hover{border-color:var(--sage-deep)}
+#night .chip[aria-pressed="true"]{background:var(--magenta); color:var(--linen); border-color:var(--magenta-bright)}
+#night .chip:hover{border-color:var(--magenta-bright)}
+.coll-bar{display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:28px; padding-bottom:20px; border-bottom:1px solid var(--hair)}
+.dark-zone .coll-bar{border-bottom-color:var(--night-hair)}
+.count{font-size:14px; color:var(--ink-soft); font-variant-numeric:tabular-nums}
+.dark-zone .count{color:var(--linen-soft)}
+.grid{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:32px 24px}
+@media (max-width:1100px){ .grid{grid-template-columns:repeat(3, minmax(0,1fr))} }
+@media (max-width:760px){ .grid{grid-template-columns:repeat(2, minmax(0,1fr)); gap:28px 14px} }
+.prod{position:relative; display:flex; flex-direction:column; gap:10px; min-width:0; animation:cardIn .8s var(--ease) both}
+.prod h3 a::after{content:""; position:absolute; inset:0; z-index:1}
+.prod .desc{font-size:14px; line-height:1.5; color:var(--ink-soft); display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-top:-4px}
+.dark-zone .prod .desc{color:var(--linen-soft)}
+.prod h3 a:focus-visible{outline:none}
+.prod:focus-within{outline:2px solid var(--magenta); outline-offset:6px}
+.dark-zone .prod:focus-within{outline-color:var(--magenta-bright)}
+.prod .ph{aspect-ratio:3/4}
+.prod .ph-media{transition:transform 1.2s var(--ease)}
+.prod:hover .ph-media{transform:scale(1.05)}
+.quick{position:absolute; left:12px; right:12px; bottom:12px; min-height:46px; display:flex; align-items:center; justify-content:center; background:var(--paper); color:var(--ink); font-size:13px; font-weight:500; letter-spacing:.06em; text-decoration:none; transform:translateY(130%); transition:transform .6s var(--ease)}
+.prod:hover .quick, .prod:focus-within .quick{transform:none}
+.quick{pointer-events:none}
+.save[aria-pressed="true"] svg path{fill:currentColor}
+.save{position:absolute; top:8px; right:8px; z-index:2; color:var(--linen); width:40px; height:40px; border-radius:50%; background:rgba(30,26,29,.32); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px)}
+.prod h3{font-size:24px; line-height:1.15}
+.prod h3 a{text-decoration:none}
+.prod .meta{display:flex; justify-content:space-between; gap:10px; font-size:14px; color:var(--ink-soft)}
+.dark-zone .prod .meta{color:var(--linen-soft)}
+.sws{display:flex; gap:6px}
+.sws i{width:16px; height:16px; border-radius:50%; border:1px solid rgba(0,0,0,.08)}
+.skel{aspect-ratio:3/4; background:linear-gradient(100deg, rgba(0,0,0,.04) 30%, rgba(0,0,0,.09) 50%, rgba(0,0,0,.04) 70%); background-size:300% 100%; animation:shimmer 1.2s linear infinite}
+.dark-zone .skel{background:linear-gradient(100deg, rgba(255,255,255,.04) 30%, rgba(255,255,255,.1) 50%, rgba(255,255,255,.04) 70%); background-size:300% 100%}
+.more-wrap{display:flex; justify-content:center; margin-top:48px}
+.more-wrap.auto{margin-top:28px; min-height:1px}
+.more-wrap.auto .btn{border:0; background:none; pointer-events:none; font-size:12px; letter-spacing:.16em; text-transform:uppercase; opacity:.6}
+.dark-zone{background:var(--night); color:var(--linen)}
+.dark-zone .eyebrow{color:var(--magenta-bright)}
+.dark-zone .sec-head p.intro-p{color:var(--linen-soft)}
+.dusk-band{height:clamp(120px,14vw,200px); background:linear-gradient(180deg, var(--ivory), var(--blush) 30%, #B8557F 62%, var(--night))}
+
+/* ---------- Shop by style ---------- */
+.styles{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:24px}
+@media (max-width:900px){ .styles{grid-template-columns:repeat(2, minmax(0,1fr)); gap:16px} }
+.style{display:flex; flex-direction:column; gap:14px; text-decoration:none; color:var(--linen); min-width:0}
+.style .ph{aspect-ratio:3/4}
+.style .ph-media{transition:transform 1.2s var(--ease)}
+.style:hover .ph-media{transform:scale(1.05)}
+.style-name{display:flex; justify-content:space-between; align-items:center; font-family:var(--display); font-size:clamp(26px,2.6vw,34px); line-height:1.1}
+.style p{color:var(--linen-soft); font-size:14px}
+
+/* ---------- Fabric ---------- */
+.fabric{background:var(--mist); color:var(--ink)}
+.fabric-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:clamp(40px,6vw,96px); align-items:center}
+.fabric-copy{display:flex; flex-direction:column; gap:24px; min-width:0}
+.fabric-copy .eyebrow{color:var(--sage-deep)}
+.fabric-copy h2{font-size:clamp(40px,4.8vw,70px); line-height:1.02}
+.tabs{display:inline-flex; border:1px solid var(--ink); align-self:flex-start}
+.tabs button{min-height:46px; padding:0 26px; font-family:var(--body); font-size:14px; font-weight:500; letter-spacing:.04em; border:0; background:transparent; color:var(--ink); cursor:pointer; transition:background .4s var(--ease), color .4s var(--ease)}
+.tabs button[aria-pressed="true"]{background:var(--ink); color:var(--ivory)}
+.swatches{display:flex; flex-wrap:wrap; gap:6px}
+.sw{width:52px; height:52px; border-radius:50%; border:2px solid transparent; padding:4px; background:transparent; cursor:pointer; transition:border-color .3s var(--ease), transform .3s var(--ease)}
+.sw span{display:block; width:100%; height:100%; border-radius:50%}
+.sw:hover{transform:translateY(-2px)}
+.sw[aria-pressed="true"]{border-color:var(--ink)}
+.picked{font-size:15px; color:var(--ink-soft)}
+.picked b{color:var(--ink); font-weight:500}
+.cloth{position:relative; aspect-ratio:1; max-width:100%; overflow:hidden}
+.cloth-layer{position:absolute; inset:0; opacity:0; transform:scale(1.04); transition:opacity .9s var(--ease)}
+.cloth-layer.on{opacity:1; transform:scale(1); transition:opacity .9s var(--ease), transform 2.4s var(--ease)}
+.cloth-cap{position:absolute; left:24px; bottom:22px; z-index:2; font-family:var(--display); font-style:italic; font-size:30px; color:var(--ink); background:rgba(252,250,246,.9); padding:6px 16px}
+@media (max-width:900px){ .fabric-grid{grid-template-columns:minmax(0,1fr)} }
+
+/* ---------- Footer ---------- */
+.ftr{background:var(--night); color:var(--linen); padding-block:72px 40px}
+.ftr-news{display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; padding-bottom:56px; border-bottom:1px solid var(--night-hair)}
+.ftr-news h2{font-size:clamp(34px,3.6vw,52px); line-height:1.05; max-width:16ch}
+.ftr-news form{display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; flex:1 1 380px; max-width:560px}
+.field{display:flex; flex-direction:column; gap:8px; flex:1 1 240px; font-size:14px; color:var(--linen-soft)}
+.field input{min-height:52px; padding:0 16px; border:1px solid #6A5E66; border-radius:2px; background:var(--night-raised); color:var(--linen); font-family:var(--body); font-size:16px}
+.field input::placeholder{color:#8F8489}
+.btn-night{background:var(--magenta-bright); color:var(--night)}
+.btn-night:hover{background:#EC97C2}
+.thanks{flex-basis:100%; min-height:24px; color:var(--magenta-bright); font-size:14px}
+.ftr-top{display:flex; flex-wrap:wrap; gap:48px; justify-content:space-between; padding-top:56px}
+.ftr-brand{display:flex; flex-direction:column; gap:16px; flex:1 1 240px}
+.ftr-brand img{height:120px; width:auto; align-self:flex-start}
+.ftr-brand p{color:var(--linen-soft); font-size:14px}
+.ftr nav{display:flex; flex-direction:column; gap:6px; font-size:14px; flex:0 1 170px}
+.ftr nav .eyebrow{color:var(--linen-soft); margin-bottom:6px}
+.ftr nav a{text-decoration:none; color:var(--linen); padding-block:4px}
+.ftr nav a:hover{color:var(--magenta-bright)}
+.ftr-bot{margin-top:56px; padding-top:22px; border-top:1px solid var(--night-hair); font-size:13px; color:var(--linen-soft)}
+
+
+/* ---------- Style detail page ---------- */
+#home [id]{scroll-margin-top:72px}
+.bag{position:relative}
+.bag-n{position:absolute; top:5px; right:2px; min-width:18px; height:18px; padding:0 5px; border-radius:9px; background:var(--magenta); color:var(--ivory); font-size:11px; font-weight:500; line-height:18px; text-align:center}
+.toast{position:fixed; left:50%; bottom:calc(24px + env(safe-area-inset-bottom,0px)); z-index:70; max-width:calc(100% - 32px); padding:14px 22px; background:var(--ink); color:var(--ivory); font-size:14px; line-height:1.5; transform:translate(-50%,calc(100% + 48px)); visibility:hidden; transition:transform .5s var(--ease), visibility 0s linear .5s; box-shadow:0 0 0 1px rgba(244,239,232,.12)}
+.toast.on{transform:translate(-50%,0); visibility:visible; transition:transform .5s var(--ease), visibility 0s}
+.pdp{--acc:var(--sage); --acc-t:var(--ink); --acc-ring:var(--sage-deep); --pbg:var(--ivory); --pf:var(--ink); --ps:var(--ink-soft); --ph:var(--hair); --pon:var(--ink); --pon-t:var(--ivory); --praised:var(--paper); --perr:var(--magenta);
+  background:var(--pbg); color:var(--pf); padding-top:calc(76px + env(safe-area-inset-top,0px)); padding-bottom:clamp(72px,9vw,128px)}
+.pdp.dark-zone{--acc:var(--magenta); --acc-t:var(--linen); --acc-ring:var(--magenta-bright); --pbg:var(--night); --pf:var(--linen); --ps:var(--linen-soft); --ph:var(--night-hair); --pon:var(--linen); --pon-t:var(--night); --praised:var(--night-raised); --perr:var(--magenta-bright)}
+.pdp .eyebrow{color:var(--ps)}
+.pdp.dark-zone .eyebrow.pdp-line{color:var(--magenta-bright)}
+.pdp .eyebrow.pdp-line{color:var(--sage-deep); display:inline-flex; gap:10px; align-items:center}
+.crumbs{display:flex; flex-wrap:wrap; gap:10px; align-items:center; padding-block:28px 28px; font-size:13px; color:var(--ps)}
+.crumbs a{text-decoration:none; min-height:32px; display:inline-flex; align-items:center}
+.crumbs a:hover{color:var(--pf); text-decoration:underline}
+.crumbs .back{display:inline-flex; align-items:center; gap:8px; margin-right:14px; padding:0 14px; min-height:36px; border:1px solid var(--ph); background:transparent; color:var(--pf); font-family:var(--body); font-size:13px; cursor:pointer}
+.crumbs .back:hover{border-color:var(--acc-ring)}
+.pdp-grid{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:clamp(32px,5vw,88px); align-items:start; animation:cardIn .7s var(--ease) both}
+.gallery{position:sticky; top:96px; display:grid; grid-template-columns:76px minmax(0,1fr); gap:16px; align-items:start}
+.thumbs{display:flex; flex-direction:column; gap:10px}
+.thumb{position:relative; width:76px; aspect-ratio:3/4; padding:0; overflow:hidden; border:1px solid var(--ph); background:var(--praised); cursor:pointer}
+.thumb[aria-pressed="true"]{outline:2px solid var(--acc-ring); outline-offset:3px}
+.thumb img, .stage img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .7s var(--ease)}
+.stage{position:relative; width:100%; max-width:calc((100vh - 130px) * .75); aspect-ratio:3/4; overflow:hidden; background:var(--praised); cursor:zoom-in}
+.stage.zooming img{transition:transform .15s linear}
+.stage-label{position:absolute; left:14px; bottom:14px; padding:5px 12px; background:rgba(252,250,246,.9); color:var(--ink); font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; pointer-events:none}
+.info{display:flex; flex-direction:column; gap:26px; min-width:0}
+.pdp-title{display:flex; flex-direction:column; gap:12px}
+.info h1{font-size:clamp(40px,4.4vw,62px); line-height:1.02}
+.pdp-desc{font-size:18px; line-height:1.6; font-weight:300; max-width:34em}
+.pdp-price{font-size:20px; font-weight:500; font-variant-numeric:tabular-nums}
+.journey{list-style:none; margin:0 0 -8px; padding:16px 0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; border-block:1px solid var(--ph)}
+.journey li{display:flex; flex-direction:column; gap:4px; min-width:0; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ps)}
+.journey li b{display:flex; gap:8px; align-items:center; font-size:14px; font-weight:500; letter-spacing:0; text-transform:none; color:var(--pf); overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.tick{flex:none; width:18px; height:18px; border-radius:50%; border:1px solid var(--ps); display:grid; place-items:center}
+.journey li.done .tick{background:var(--acc); border-color:var(--acc); color:var(--acc-t)}
+.journey li:not(.done) b{color:var(--ps); font-weight:400}
+@media (max-width:520px){ .journey{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.opt{display:flex; flex-direction:column; gap:14px}
+.opt-head{display:flex; justify-content:space-between; align-items:baseline; gap:12px; font-size:14px}
+.opt-head span{font-weight:500; letter-spacing:.04em}
+.opt-head b{font-weight:400; color:var(--ps)}
+.opt-note{font-size:14px; color:var(--ps)}
+.pdp .tabs{border-color:var(--acc-ring)}
+.pdp .tabs button{color:var(--pf)}
+.pdp .tabs button[aria-pressed="true"]{background:var(--acc); color:var(--acc-t)}
+.pdp .swatches{gap:10px}
+.pdp .sw{width:60px; height:60px}
+.pdp .sw[aria-pressed="true"]{border-color:var(--acc-ring)}
+.pdp .sw:hover{border-color:var(--acc)}
+.stage.dyeing img{filter:saturate(.6) brightness(1.04); transition:filter .2s}
+.stage-fab{position:absolute; right:14px; top:14px; padding:5px 12px; background:var(--acc); color:var(--acc-t); font-size:11px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; pointer-events:none}
+.btn-sage{background:var(--sage-deep); color:var(--ivory)}
+.btn-sage:hover{background:#3F5A3B}
+.pdp .sw span{box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.sizes{display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px}
+.size{min-height:50px; border:1px solid var(--ph); border-radius:2px; background:transparent; color:var(--pf); font-family:var(--body); font-size:14px; font-weight:500; cursor:pointer; transition:background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease)}
+.size:hover{border-color:var(--pf)}
+.size:hover{border-color:var(--acc-ring)}
+.size[aria-pressed="true"]{background:var(--acc); color:var(--acc-t); border-color:var(--acc-ring)}
+@media (max-width:520px){ .sizes{grid-template-columns:repeat(4,minmax(0,1fr))} }
+.sg{overflow-x:auto; border:1px solid var(--ph)}
+.sg table{width:100%; border-collapse:collapse; font-size:14px; font-variant-numeric:tabular-nums}
+.sg caption{caption-side:top; text-align:left; padding:12px 16px 4px; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--ps)}
+.sg th, .sg td{padding:9px 16px; text-align:left; border-top:1px solid var(--ph)}
+.sg thead th{font-weight:500; color:var(--ps)}
+.hint{min-height:22px; margin-top:-4px; font-size:14px; color:var(--perr)}
+.buy{display:flex; gap:10px}
+.buy .btn{flex:1 1 auto; min-height:56px; font-size:15px}
+.savebig{width:56px; height:56px; flex:none; border:1px solid var(--pf); color:var(--pf)}
+.savebig[aria-pressed="true"] svg path{fill:currentColor}
+.ship{font-size:14px; color:var(--ps); margin-top:-10px}
+.acc details{border-top:1px solid var(--ph)}
+.acc details:last-child{border-bottom:1px solid var(--ph)}
+.acc summary{list-style:none; display:flex; justify-content:space-between; align-items:center; gap:16px; min-height:58px; cursor:pointer; font-size:15px; font-weight:500; letter-spacing:.03em}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+"; font-family:var(--display); font-size:28px; font-weight:400; line-height:1; transition:transform .4s var(--ease)}
+.acc details[open] summary::after{transform:rotate(45deg)}
+.acc-body{padding-bottom:22px; max-width:56ch; color:var(--ps); font-size:15px; line-height:1.7}
+.related{margin-top:clamp(80px,9vw,136px)}
+.pdp .prod .meta, .pdp .prod .desc{color:var(--ps)}
+.pdp .count{color:var(--ps)}
+@media (max-width:900px){
+  .pdp-grid{grid-template-columns:minmax(0,1fr)}
+  .gallery{position:static; grid-template-columns:minmax(0,1fr)}
+  .thumbs{flex-direction:row; order:2}
+  .stage{max-width:none}
+}
+
+/* Variant cards and style pages */
+#styleTitle:focus, #pdpTitle:focus{outline:none}
+.prod .ph-img{transition:opacity .6s var(--ease)}
+.ph.pending .ph-img{opacity:0}
+.ph.pending::before{content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(100deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.3) 50%, rgba(255,255,255,0) 70%); background-size:300% 100%; animation:shimmer 1.3s linear infinite}
+.fab-line{margin-top:-6px; font-size:11px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--sage-deep)}
+.prod[data-line="night"] .fab-line{color:var(--magenta)}
+.dark-zone .prod[data-line="night"] .fab-line{color:var(--magenta-bright)}
+.dark-zone .prod[data-line="noon"] .fab-line{color:#B8CCB0}
+.stylepage{background:var(--ivory); color:var(--ink); padding-top:calc(76px + env(safe-area-inset-top,0px)); padding-bottom:clamp(72px,9vw,128px)}
+.stylepage .crumbs a:hover{color:var(--ink)}
+.style-h1{font-size:clamp(52px,7vw,104px); line-height:.98}
+.chip[data-val="noon"][aria-pressed="true"]{background:var(--sage); color:var(--ink); border-color:var(--sage)}
+.chip[data-val="night"][aria-pressed="true"]{background:var(--magenta); color:var(--linen); border-color:var(--magenta)}
+.chip[data-val="noon"]:hover{border-color:var(--sage-deep)}
+.chip[data-val="night"]:hover{border-color:var(--magenta)}
+.style-other{display:flex; flex-wrap:wrap; gap:16px 32px; align-items:center; margin-top:clamp(56px,7vw,96px); padding-top:28px; border-top:1px solid var(--hair)}
+
+/* Reveal: blocks rest visible; below-the-fold blocks start slightly lowered */
+.rv{transition:opacity 1.1s var(--ease), transform 1.1s var(--ease)}
+.rv.wait{opacity:.2; transform:translateY(32px)}
+
+@keyframes fill{to{width:100%}}
+@keyframes sweep{0%{opacity:0; transform:translateX(-60%)}30%{opacity:1}100%{opacity:0; transform:translateX(60%)}}
+@keyframes drift{from{transform:scale(1.12)}to{transform:scale(1)}}
+@keyframes cardIn{from{opacity:0; transform:translateY(24px)}to{opacity:1; transform:none}}
+@keyframes shimmer{to{background-position:-150% 0}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important; transition:none!important}
+  html{scroll-behavior:auto}
+  .rv.wait{opacity:1; transform:none}
+}
+
+/* Night pages on a light sage ground (was near-black): same rules, lighter palette, so every tab and link reads clearly */
+.sec.dark-zone, .pdp.dark-zone{--night:#E3EADD; --night-raised:#F2F5EF; --linen:#2B2628; --linen-soft:#565A53; --night-hair:#BFCBB6; --magenta-bright:#8E1F5E}
+.sec.dark-zone .skel, .pdp.dark-zone .skel{background:linear-gradient(100deg, rgba(43,38,40,.05) 30%, rgba(43,38,40,.1) 50%, rgba(43,38,40,.05) 70%); background-size:300% 100%}
+.sec.dark-zone .prod[data-line="noon"] .fab-line{color:var(--sage-deep)}
+.pdp.dark-zone{--acc-t:#FFFFFF; --pon-t:#FFFFFF}
+#night .chip[aria-pressed="true"], .sec.dark-zone .chip[data-val="night"][aria-pressed="true"]{color:#FFFFFF; border-color:var(--magenta)}
+.sec.dark-zone .chip[aria-pressed="true"]{color:#FFFFFF}
+.dusk-band{background:linear-gradient(180deg, var(--ivory), #EEF1E8 45%, #E3EADD)}
+
+html, body{margin:0}
+</style>
+
+<!-- ===== Intro film: plays on every load, ends on any scroll, tap, click or key ===== -->
+<div class="intro" id="intro" role="region" aria-label="Noon and Night: a day in six scenes">
+  <video class="intro-video" id="introVideo" src="assets/hero-film.mp4" poster="assets/hero-poster.jpg" muted loop playsinline preload="auto" aria-hidden="true"></video>
+  <div class="scene" style="--tone:#A9B79B; --light:radial-gradient(90% 70% at 80% 10%, rgba(255,248,230,.55), rgba(255,248,230,0) 60%)">
+    <div class="bg"></div><div class="sweep"></div><div class="veil"></div>
+    <div class="scene-copy">
+      <span class="scene-time"><i class="dot"></i>1:30 pm · Lunch with friends</span>
+      <h2>Lunch runs long.</h2>
+      <span class="scene-wear">Wearing <b>The Alibaug Kaftan</b>, from the Noon line</span>
+    </div>
+  </div>
+  <div class="scene" style="--tone:#5B2343; --light:radial-gradient(80% 60% at 30% 20%, rgba(217,179,106,.45), rgba(217,179,106,0) 60%)">
+    <div class="bg"></div><div class="sweep"></div><div class="veil"></div>
+    <div class="scene-copy">
+      <span class="scene-time"><i class="crescent"></i>8:30 pm · The evening party</span>
+      <h2><em>And the night</em> begins.</h2>
+      <span class="scene-wear">Wearing <b>The Late Dinner Dress</b>, from the Night line</span>
+    </div>
+  </div>
+  <div class="scene" style="--tone:#C9BFA4; --light:radial-gradient(90% 80% at 70% 0%, rgba(255,255,245,.6), rgba(255,255,245,0) 60%)">
+    <div class="bg"></div><div class="sweep"></div><div class="veil"></div>
+    <div class="scene-copy">
+      <span class="scene-time"><i class="dot"></i>11:00 am · Family brunch at the resort</span>
+      <h2>Slow mornings, together.</h2>
+      <span class="scene-wear">Wearing <b>The Lisbon Co-ord</b>, from the Noon line</span>
+    </div>
+  </div>
+  <div class="scene" style="--tone:#7B3A4E; --light:linear-gradient(180deg, rgba(240,160,90,.55), rgba(142,31,94,.1) 55%, rgba(30,26,29,0))">
+    <div class="bg"></div><div class="sweep"></div><div class="veil"></div>
+    <div class="scene-copy">
+      <span class="scene-time"><i class="crescent"></i>6:45 pm · Sunset cocktails on the beach</span>
+      <h2><em>Golden hour,</em> barefoot.</h2>
+      <span class="scene-wear">Wearing <b>The Marrakech Kaftan</b>, from the Night line</span>
+    </div>
+  </div>
+  <div class="scene quiet" style="--tone:#B7A98C; --light:radial-gradient(70% 60% at 50% 15%, rgba(255,236,200,.55), rgba(255,236,200,0) 65%)">
+    <div class="bg"></div><div class="sweep"></div><div class="veil"></div>
+    <div class="scene-copy">
+      <span class="scene-time"><i class="dot"></i>4:00 pm · The wedding ceremony</span>
+      <h2>A day to remember.</h2>
+      <span class="scene-wear">Wearing <b>The Courtyard Co-ord</b>, from the Noon line</span>
+    </div>
+  </div>
+  <div class="scene" style="--tone:#3A1C2E; --light:radial-gradient(60% 50% at 50% 30%, rgba(224,122,174,.4), rgba(224,122,174,0) 60%), linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(160,20,40,.25))">
+    <div class="bg"></div><div class="sweep"></div><div class="veil"></div>
+    <div class="scene-copy">
+      <span class="scene-time"><i class="crescent"></i>10:00 pm · The red carpet</span>
+      <h2><em>Every eye</em> on you.</h2>
+      <span class="scene-wear">Wearing <b>The Red Carpet Gown</b>, from the Night line</span>
+    </div>
+  </div>
+  <div class="finale" id="finale">
+    <div class="finale-in">
+      <img src="assets/logo-badge.svg" alt="Noon &amp; Night">
+      <p>One wardrobe, sunlit to evening.</p>
+    </div>
+  </div>
+  <div class="intro-top">
+    <img src="assets/logo-dark.svg" alt="Noon &amp; Night">
+    <button class="skip" id="skip" type="button">Skip</button>
+  </div>
+  <p class="intro-hint">Scroll or tap to enter</p>
+  <div class="segs" aria-hidden="true"><span class="seg"><span></span></span><span class="seg"><span></span></span><span class="seg"><span></span></span><span class="seg"><span></span></span><span class="seg"><span></span></span><span class="seg"><span></span></span></div>
+</div>
+
+<header class="hdr" id="hdr">
+  <div class="wrap hdr-in">
+    <a class="logo" href="#top" aria-label="Noon &amp; Night home">
+      <img class="on-light" src="assets/logo-light.svg" alt="Noon &amp; Night">
+      <img class="on-dark" src="assets/logo-dark.svg" alt="" aria-hidden="true">
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#noon">Noon collection</a>
+      <a href="#night">Night collection</a>
+      <a href="#styles">Shop by style</a>
+      <a href="#fabric">Fabrics</a>
+      <a href="#how">How it works</a>
+    </nav>
+    <div class="hdr-tools">
+      <button class="iconbtn" type="button" aria-label="Search"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></button>
+      <button class="iconbtn bag" id="bagBtn" type="button" aria-label="Your bag, empty"><span class="bag-n" id="bagN" hidden>0</span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></button>
+      <button class="iconbtn menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="sheet"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+    </div>
+  </div>
+  <div class="wrap" id="sheet" hidden>
+    <nav class="sheet" aria-label="Menu">
+      <a href="#noon">Noon collection</a>
+      <a href="#night">Night collection</a>
+      <a href="#styles">Shop by style</a>
+      <a href="#fabric">Fabrics</a>
+      <a href="#how">How it works</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<div id="home">
+
+<section class="hero" aria-labelledby="hero-title">
+  <figure class="ph tone-sage"><div class="ph-media"><img class="ph-img" src="assets/mood-lunch.jpg" alt="A woman in a sage kaftan walking out of a restaurant with friends" style="object-position:42% 30%"></div></figure>
+  <figure class="ph tone-magenta"><div class="ph-media"><img class="ph-img" src="assets/mood-evening.jpg" alt="A woman in a magenta kaftan arriving at an evening party" style="object-position:48% 30%"></div></figure>
+  <span class="hero-tag l"><i class="dot"></i>Noon</span>
+  <span class="hero-tag r"><i class="crescent"></i>Night</span>
+  <div class="hero-copy">
+    <div class="wrap">
+      <p class="eyebrow" style="color:#EDE5DC">Resort wear for sunlit days and long evenings</p>
+      <h1 id="hero-title">From a slow breakfast <em>to a late dinner</em></h1>
+      <p class="hero-lede">Easy, flowing pieces for the whole day. Pick your mood, your style and your fabric, and make it your own.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-linen" href="#noon">Shop the Noon collection</a>
+        <a class="btn btn-ghost-linen" href="#night">Shop the Night collection</a>
+        <button class="replay" id="replay" type="button"><i><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg></i>Play the film again</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="how" aria-labelledby="how-title">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <p class="eyebrow">How it works</p>
+        <h2 id="how-title">Pick a style and make it your own</h2>
+        <p class="intro-p">Five easy steps from the mood you are in to a piece that feels made for you.</p>
+      </div>
+    </div>
+    <ol class="steps" id="steps" style="list-style:none; margin:0; padding:0">
+      <li class="steps-line" aria-hidden="true"><i></i></li>
+      <li class="step"><span class="step-num">1</span><h3>Pick your mood</h3><p>Noon for easy, everyday days. Night when the evening calls for more.</p><div class="chips"><span>Noon</span><span>Night</span></div></li>
+      <li class="step"><span class="step-num">2</span><h3>Pick your style</h3><p>Start with the shape you love.</p><div class="chips"><span>Tops</span><span>Bottoms</span><span>Co-ords</span><span>Dresses</span></div></li>
+      <li class="step"><span class="step-num">3</span><h3>Choose the fabric</h3><p>See every style in a solid or a print before you decide.</p><div class="chips"><span>Solid</span><span>Printed</span></div></li>
+      <li class="step"><span class="step-num">4</span><h3>Choose your size</h3><p>Our fit guide shows how each piece falls, so you can choose with confidence.</p><div class="chips"><span>XS to 3XL</span></div></li>
+      <li class="step"><span class="step-num">5</span><h3>Make it your own</h3><p>Review your piece, in your fabric and your size, and it is ready to order.</p></li>
+    </ol>
+    <div class="steps-cta rv">
+      <a class="btn btn-primary" href="#moods">Start with your mood</a>
+    </div>
+  </div>
+</section>
+
+<section id="moods" aria-labelledby="moods-title">
+  <div class="moods-head">
+    <div class="wrap sec-head rv" style="margin-bottom:0; padding-bottom:clamp(32px,4vw,56px)">
+      <div>
+        <p class="eyebrow">Shop by mood</p>
+        <h2 id="moods-title">How do you want to feel today?</h2>
+      </div>
+    </div>
+  </div>
+  <div class="moods">
+    <a class="mood" href="#noon">
+      <figure class="ph tone-sage"><div class="ph-media"><img class="ph-img" src="assets/mood-brunch.jpg" alt="Family brunch by the sea, a woman in a printed co-ord" style="object-position:55% 25%" loading="lazy"></div></figure>
+      <div class="mood-copy">
+        <p class="eyebrow"><i class="dot"></i>Noon collection</p>
+        <h3>Everyday wear</h3>
+        <p>Breathable, easy pieces for markets, verandahs and lunches that turn into afternoons.</p>
+        <span class="textlink">Shop Noon <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </a>
+    <a class="mood" href="#night">
+      <figure class="ph tone-magenta"><div class="ph-media"><img class="ph-img" src="assets/mood-red-carpet.jpg" alt="A magenta gown on the red carpet at an evening party" style="object-position:62% 30%" loading="lazy"></div></figure>
+      <div class="mood-copy">
+        <p class="eyebrow"><i class="crescent"></i>Night collection</p>
+        <h3><em>Make a statement</em></h3>
+        <p>Occasion pieces with more drama, for weddings, parties and evenings that run late.</p>
+        <span class="textlink">Shop Night <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="sec" id="noon" aria-labelledby="noon-title">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <p class="eyebrow" style="color:var(--sage-deep)"><i class="dot" style="margin-right:10px"></i>Noon collection</p>
+        <h2 id="noon-title">Everyday wear</h2>
+        <p class="intro-p">Easy shapes in breathable fabric, made for long days in good company.</p>
+      </div>
+    </div>
+    <div class="coll" data-coll="noon"></div>
+  </div>
+</section>
+
+<div class="dusk-band" aria-hidden="true"></div>
+
+<section class="sec dark-zone" id="night" aria-labelledby="night-title" style="padding-top:clamp(40px,5vw,72px)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <p class="eyebrow"><i class="crescent" style="margin-right:10px"></i>Night collection</p>
+        <h2 id="night-title"><em style="font-weight:400">Make a statement</em></h2>
+        <p class="intro-p">For golden hour and after. Pieces with a little more drama, made to be remembered.</p>
+      </div>
+    </div>
+    <div class="coll" data-coll="night"></div>
+  </div>
+</section>
+
+<section class="sec dark-zone" id="styles" aria-labelledby="styles-title" style="border-top:1px solid var(--night-hair)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <p class="eyebrow">Shop by style</p>
+        <h2 id="styles-title">Start with the shape you love</h2>
+      </div>
+    </div>
+    <div class="styles">
+      <a class="style rv" href="#s-tops"><figure class="ph"><div class="ph-media"><img class="ph-img" src="assets/photos/noon-tops-4.jpg" alt="The Alibaug Easy Top in soft pink linen" style="object-position:50% 25%" loading="lazy"></div></figure><span class="style-name">Tops <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><p>Noon and Night</p></a>
+      <a class="style rv" href="#s-bottoms"><figure class="ph"><div class="ph-media"><img class="ph-img" src="assets/photos/night-bottoms-6.jpg" alt="Sequin trousers from the Night collection" style="object-position:50% 25%" loading="lazy"></div></figure><span class="style-name">Bottoms <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><p>Noon and Night</p></a>
+      <a class="style rv" href="#s-coords"><figure class="ph"><div class="ph-media"><img class="ph-img" src="assets/photos/noon-coords-3.jpg" alt="The Palm Grove Co-ord in a palm print" style="object-position:50% 25%" loading="lazy"></div></figure><span class="style-name">Co-ords <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><p>Noon and Night</p></a>
+      <a class="style rv" href="#s-dresses"><figure class="ph"><div class="ph-media"><img class="ph-img" src="assets/photos/night-dresses-1.jpg" alt="The Late Dinner Kaftan in magenta" style="object-position:50% 12%" loading="lazy"></div></figure><span class="style-name">Dresses <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><p>Noon and Night</p></a>
+    </div>
+  </div>
+</section>
+
+<section class="sec fabric" id="fabric" aria-labelledby="fabric-title">
+  <div class="wrap fabric-grid">
+    <div class="fabric-copy rv">
+      <p class="eyebrow">Solid or printed</p>
+      <h2 id="fabric-title">Choose your fabric</h2>
+      <p>Every style comes in a choice of solid or printed fabric. Pick the shape you love, then the fabric that suits where you are going.</p>
+      <div class="tabs" role="group" aria-label="Fabric type">
+        <button type="button" data-tab="solid" aria-pressed="true">Solid</button>
+        <button type="button" data-tab="printed" aria-pressed="false">Printed</button>
+      </div>
+      <div class="swatches" id="swatches" role="group" aria-label="Fabrics"></div>
+      <p class="picked" aria-live="polite">Selected: <b id="pickedName">Sage</b></p>
+    </div>
+    <div class="cloth rv" id="cloth" aria-hidden="true"><span class="cloth-cap" id="clothCap">Sage</span></div>
+  </div>
+</section>
+
+</div>
+<section class="pdp" id="pdp" hidden aria-label="Style details"></section>
+<section class="stylepage" id="stylepage" hidden aria-label="Shop by style"></section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<footer class="ftr dark-zone">
+  <div class="wrap">
+    <div class="ftr-news">
+      <h2>Be the first to see the first collection</h2>
+      <form id="joinForm" novalidate>
+        <label class="field" for="email">Email address
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        </label>
+        <button class="btn btn-night" type="submit">Join the list</button>
+        <p class="thanks" id="thanks" aria-live="polite"></p>
+      </form>
+    </div>
+    <div class="ftr-top">
+      <div class="ftr-brand">
+        <img src="assets/logo-badge.svg" alt="Noon &amp; Night">
+        <p>One wardrobe, sunlit to evening.</p>
+      </div>
+      <nav aria-label="Shop"><span class="eyebrow">Shop</span><a href="#noon">Noon collection</a><a href="#night">Night collection</a><a href="#styles">Shop by style</a><a href="#fabric">Fabrics</a></nav>
+      <nav aria-label="Help"><span class="eyebrow">Help</span><a href="#how">How it works</a><a href="#top">Size guide</a><a href="#top">Delivery</a><a href="#top">Returns and exchanges</a><a href="#top">Contact us</a></nav>
+      <nav aria-label="About"><span class="eyebrow">Noon &amp; Night</span><a href="#top">Our story</a><a href="#top">Journal</a><a href="#top">Instagram</a></nav>
+    </div>
+    <p class="ftr-bot">© 2026 Noon &amp; Night</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+  var hdr = document.getElementById('hdr');
+  var heroEl = document.querySelector('.hero');
+
+  /* ---------- Intro film ---------- */
+  var intro = document.getElementById('intro');
+  var scenes = [].slice.call(intro.querySelectorAll('.scene'));
+  var segs = [].slice.call(intro.querySelectorAll('.seg'));
+  var finale = document.getElementById('finale');
+  var SCENE = 3800, timers = [], playing = false;
+
+  function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+  function showScene(i){
+    scenes.forEach(function(s, k){ s.classList.toggle('on', k === i); });
+    segs.forEach(function(g, k){
+      g.classList.remove('run');
+      g.classList.toggle('full', k < i);
+      if (k === i){ void g.offsetWidth; g.style.setProperty('--dur', SCENE + 'ms'); g.classList.add('run'); }
+    });
+  }
+  function endIntro(){
+    if (!playing) return;
+    playing = false;
+    clearTimers();
+    disarm();
+    cancelAnimationFrame(raf);
+    try { video.pause(); } catch (err) {}
+    intro.classList.add('out');
+    root.classList.remove('intro-on');
+    timers.push(setTimeout(function(){ intro.hidden = true; }, 950));
+    onScroll();
+  }
+  function onAny(e){
+    if (e.type === 'keydown' && (e.key === 'Tab' || e.key === 'Shift')) return;
+    endIntro();
+  }
+  var evs = ['wheel','touchstart','keydown','mousedown'];
+  function arm(){ evs.forEach(function(t){ window.addEventListener(t, onAny, {passive:true}); }); }
+  function disarm(){ evs.forEach(function(t){ window.removeEventListener(t, onAny, {passive:true}); }); }
+  var video = document.getElementById('introVideo');
+  var raf = 0, cur = -1, VSCENE = 4, fell = false;
+  function toFinale(){
+    scenes.forEach(function(s){ s.classList.remove('on'); });
+    segs.forEach(function(g){ g.classList.remove('run'); g.classList.add('full'); g.firstChild.style.width = ''; });
+    finale.classList.add('on');
+    timers.push(setTimeout(endIntro, 2600));
+  }
+  /* Film mode: scene captions and progress follow the video's own clock */
+  function syncVideo(){
+    if (!playing) return;
+    var t = video.currentTime || 0;
+    var i = Math.min(scenes.length - 1, Math.floor(t / VSCENE));
+    if (i !== cur){ cur = i; scenes.forEach(function(s, k){ s.classList.toggle('on', k === i); }); }
+    segs.forEach(function(g, k){ g.firstChild.style.width = (Math.max(0, Math.min(1, (t - k * VSCENE) / VSCENE)) * 100) + '%'; });
+    raf = requestAnimationFrame(syncVideo);
+  }
+  /* Fallback mode: timed scenes over colour frames, if the film cannot play */
+  function timedRun(){
+    if (fell) return;
+    fell = true;
+    try { video.pause(); } catch (err) {}
+    intro.classList.remove('has-video');
+    segs.forEach(function(g){ g.firstChild.style.width = ''; });
+    (function cycle(){
+      if (!playing) return;
+      scenes.forEach(function(_, i){ timers.push(setTimeout(function(){ showScene(i); }, i * SCENE)); });
+      timers.push(setTimeout(cycle, scenes.length * SCENE));
+    })();
+  }
+  /* The film loops until the visitor scrolls, taps, clicks or presses a key */
+  video.loop = true;
+  video.addEventListener('ended', function(){ if (playing){ try { video.currentTime = 0; video.play(); } catch (err) {} } });
+  function playIntro(){
+    clearTimers();
+    cancelAnimationFrame(raf);
+    playing = true; cur = -1; fell = false;
+    intro.hidden = false;
+    finale.classList.remove('on');
+    scenes.forEach(function(s){ s.classList.remove('on'); });
+    segs.forEach(function(g){ g.classList.remove('run','full'); g.firstChild.style.width = '0%'; });
+    root.classList.add('intro-on');
+    void intro.offsetWidth;
+    intro.classList.remove('out');
+    window.scrollTo(0, 0);
+    timers.push(setTimeout(arm, 350));
+    var started = false;
+    try {
+      video.currentTime = 0;
+      var p = video.play();
+      intro.classList.add('has-video');
+      if (p && p.then){
+        p.then(function(){ if (fell){ video.pause(); return; } started = true; syncVideo(); }).catch(function(){ if (playing) timedRun(); });
+      } else { started = true; syncVideo(); }
+    } catch (err) { timedRun(); return; }
+    timers.push(setTimeout(function(){ if (playing && !started && video.paused){ timedRun(); } }, 2500));
+  }
+  document.getElementById('skip').addEventListener('click', function(e){ e.stopPropagation(); endIntro(); });
+  intro.addEventListener('click', endIntro);
+  document.getElementById('replay').addEventListener('click', function(){ setTimeout(playIntro, 50); });
+  if (reduce || /^#(p|s)-/.test(location.hash)){ intro.hidden = true; } else { playIntro(); }
+
+  /* ---------- Mobile menu ---------- */
+  var menuBtn = document.getElementById('menuBtn'), sheet = document.getElementById('sheet');
+  menuBtn.addEventListener('click', function(){
+    var open = sheet.hidden;
+    sheet.hidden = !open;
+    menuBtn.setAttribute('aria-expanded', String(open));
+    onScroll();
+  });
+  sheet.addEventListener('click', function(e){ if (e.target.tagName === 'A'){ sheet.hidden = true; menuBtn.setAttribute('aria-expanded','false'); } });
+
+  /* ---------- Collections ---------- */
+  var tones = {noon:['tone-sage','tone-sand','tone-mist','tone-olive','tone-blush'], night:['tone-magenta','tone-dusk','tone-plum','tone-night']};
+  var products = {
+"noon": [
+{
+"id": "noon-tops-1",
+"n": "The Verandah Tunic",
+"cat": "Tops",
+"sw": [
+"#8F9478",
+"#EFE8DA"
+],
+"img": "assets/photos/noon-tops-1.jpg",
+"pos": "50% 30%",
+"d": "A loose linen tunic with a soft V-neck and easy sleeves.",
+"f": "Linen",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-bottoms-1",
+"n": "Palazzo Pants",
+"cat": "Bottoms",
+"sw": [
+"#44574A",
+"#EFE8DA",
+"#D3B08C"
+],
+"img": "assets/photos/noon-bottoms-1.jpg",
+"pos": "50% 25%",
+"d": "Wide printed palazzos that move with every step.",
+"f": "Cotton voile",
+"pr": 0,
+"mk": ""
+},
+{
+"id": "noon-coords-1",
+"n": "The Verandah Set",
+"cat": "Co-ords",
+"sw": [
+"#8F9478",
+"#EFE8DA"
+],
+"img": "assets/photos/noon-coords-1.jpg",
+"pos": "50% 25%",
+"d": "A sage linen tunic and wide trousers, made to be worn together.",
+"f": "Linen",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-dresses-1",
+"n": "The Verandah Kaftan",
+"cat": "Dresses",
+"sw": [
+"#44574A",
+"#8F9478",
+"#EFE8DA",
+"#D6A697"
+],
+"img": "assets/photos/noon-dresses-1.jpg",
+"pos": "50% 12%",
+"d": "A long palm-print kaftan with a tasselled tie.",
+"f": "Cotton voile",
+"pr": 0,
+"mk": ""
+},
+{
+"id": "noon-tops-2",
+"n": "The Goa Breeze Shirt",
+"cat": "Tops",
+"sw": [
+"#EFE8DA",
+"#D3B08C"
+],
+"img": "assets/photos/noon-tops-2.jpg",
+"pos": "50% 30%",
+"d": "A relaxed linen shirt to wear open, tied or tucked.",
+"f": "Linen",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-bottoms-2",
+"n": "Wide-Leg Linen Pants",
+"cat": "Bottoms",
+"sw": [
+"#8F9478",
+"#EFE8DA",
+"#E6BCB0"
+],
+"img": "assets/photos/noon-bottoms-2.jpg",
+"pos": "50% 25%",
+"d": "Drawstring linen trousers with a relaxed, wide leg.",
+"f": "Linen",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-coords-2",
+"n": "The Goa Breeze Set",
+"cat": "Co-ords",
+"sw": [
+"#EFE8DA",
+"#D3B08C"
+],
+"img": "assets/photos/noon-coords-2.jpg",
+"pos": "50% 25%",
+"d": "An ivory linen shirt with drawstring trousers.",
+"f": "Linen",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-dresses-2",
+"n": "The Goa Day Dress",
+"cat": "Dresses",
+"sw": [
+"#E9A9A6",
+"#E6BCB0",
+"#EFE8DA",
+"#8F9478"
+],
+"img": "assets/photos/noon-dresses-2.jpg",
+"pos": "50% 12%",
+"d": "A tiered pink midi with fine embroidery.",
+"f": "Embroidered cotton",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-tops-3",
+"n": "The Palm Wrap Top",
+"cat": "Tops",
+"sw": [
+"#44574A",
+"#EFE8DA"
+],
+"img": "assets/photos/noon-tops-3.jpg",
+"pos": "50% 30%",
+"d": "A palm-print wrap top that ties at the waist.",
+"f": "Cotton voile",
+"pr": 0,
+"mk": ""
+},
+{
+"id": "noon-bottoms-3",
+"n": "Wrap Skirt",
+"cat": "Bottoms",
+"sw": [
+"#EFE8DA",
+"#44574A",
+"#D6A697"
+],
+"img": "assets/photos/noon-bottoms-3.jpg",
+"pos": "50% 25%",
+"d": "A printed wrap skirt with a soft side tie.",
+"f": "Cotton voile",
+"pr": 0,
+"mk": ""
+},
+{
+"id": "noon-coords-3",
+"n": "The Palm Grove Co-ord",
+"cat": "Co-ords",
+"sw": [
+"#44574A",
+"#EFE8DA"
+],
+"img": "assets/photos/noon-coords-3.jpg",
+"pos": "50% 25%",
+"d": "A palm-print shirt and wide trousers for long lunches.",
+"f": "Cotton voile",
+"pr": 0,
+"mk": ""
+},
+{
+"id": "noon-dresses-3",
+"n": "The Palm Grove Kaftan",
+"cat": "Dresses",
+"sw": [
+"#44574A",
+"#8F9478",
+"#EFE8DA",
+"#D6A697"
+],
+"img": "assets/photos/noon-dresses-3.jpg",
+"pos": "50% 12%",
+"d": "A belted kaftan dress in a large palm print.",
+"f": "Cotton voile",
+"pr": 0,
+"mk": ""
+},
+{
+"id": "noon-tops-4",
+"n": "The Alibaug Easy Top",
+"cat": "Tops",
+"sw": [
+"#E9A9A6",
+"#EFE8DA"
+],
+"img": "assets/photos/noon-tops-4.jpg",
+"pos": "50% 30%",
+"d": "A wide, floaty top in soft pink cotton voile.",
+"f": "Cotton voile",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-bottoms-4",
+"n": "Tailored Shorts",
+"cat": "Bottoms",
+"sw": [
+"#D3B08C",
+"#0C3B35",
+"#1F1D38"
+],
+"img": "assets/photos/noon-bottoms-4.jpg",
+"pos": "50% 25%",
+"d": "Pleated linen shorts with a tie belt.",
+"f": "Linen",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-coords-4",
+"n": "The Alibaug Lounge Set",
+"cat": "Co-ords",
+"sw": [
+"#E9A9A6",
+"#EFE8DA"
+],
+"img": "assets/photos/noon-coords-4.jpg",
+"pos": "50% 25%",
+"d": "A pink kaftan top with matching wide trousers.",
+"f": "Linen",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-dresses-4",
+"n": "The Lunch Kaftan Midi",
+"cat": "Dresses",
+"sw": [
+"#EFE8DA",
+"#8F9478",
+"#E6BCB0"
+],
+"img": "assets/photos/noon-dresses-4.jpg",
+"pos": "50% 12%",
+"d": "An ivory midi with sage embroidery at the neck and hem.",
+"f": "Embroidered cotton",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-tops-5",
+"n": "The Market Day Blouse",
+"cat": "Tops",
+"sw": [
+"#8E1F4E",
+"#EFE8DA"
+],
+"img": "assets/photos/noon-tops-5.jpg",
+"pos": "50% 30%",
+"d": "A printed blouse with tassel ties and gathered sleeves.",
+"f": "Cotton voile",
+"pr": 2,
+"mk": ""
+},
+{
+"id": "noon-bottoms-5",
+"n": "Tiered Maxi Skirt",
+"cat": "Bottoms",
+"sw": [
+"#8F9478",
+"#EFE8DA",
+"#E6BCB0"
+],
+"img": "assets/photos/noon-bottoms-5.jpg",
+"pos": "50% 25%",
+"d": "A full tiered skirt in light sage cotton.",
+"f": "Cotton",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-coords-5",
+"n": "The Market Day Set",
+"cat": "Co-ords",
+"sw": [
+"#8E1F4E",
+"#EFE8DA"
+],
+"img": "assets/photos/noon-coords-5.jpg",
+"pos": "50% 25%",
+"d": "A printed blouse with cropped ivory trousers.",
+"f": "Cotton voile",
+"pr": 2,
+"mk": ""
+},
+{
+"id": "noon-dresses-5",
+"n": "The Alibaug Easy Dress",
+"cat": "Dresses",
+"sw": [
+"#8F9478",
+"#EFE8DA",
+"#D6A697"
+],
+"img": "assets/photos/noon-dresses-5.jpg",
+"pos": "50% 12%",
+"d": "A sage tiered dress with white floral embroidery.",
+"f": "Embroidered cotton",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "noon-tops-6",
+"n": "The Lisbon Lounge Top",
+"cat": "Tops",
+"sw": [
+"#8F9478",
+"#EFE8DA"
+],
+"img": "assets/photos/noon-tops-6.jpg",
+"pos": "50% 30%",
+"d": "A striped high-low top with a split neckline.",
+"f": "Cotton",
+"pr": 1,
+"mk": ""
+},
+{
+"id": "noon-bottoms-6",
+"n": "Printed Relaxed Pants",
+"cat": "Bottoms",
+"sw": [
+"#EFE8DA",
+"#44574A",
+"#1F1D38"
+],
+"img": "assets/photos/noon-bottoms-6.jpg",
+"pos": "50% 25%",
+"d": "Easy pull-on trousers in a leaf print.",
+"f": "Cotton voile",
+"pr": 0,
+"mk": ""
+},
+{
+"id": "noon-coords-6",
+"n": "The Lisbon Resort Set",
+"cat": "Co-ords",
+"sw": [
+"#8F9478",
+"#EFE8DA"
+],
+"img": "assets/photos/noon-coords-6.jpg",
+"pos": "50% 25%",
+"d": "A striped tunic and trousers in sage and ivory.",
+"f": "Cotton",
+"pr": 1,
+"mk": ""
+},
+{
+"id": "noon-dresses-6",
+"n": "The Lisbon Lounge Dress",
+"cat": "Dresses",
+"sw": [
+"#E9A9A6",
+"#EFE8DA",
+"#8F9478"
+],
+"img": "assets/photos/noon-dresses-6.jpg",
+"pos": "50% 12%",
+"d": "A floral kaftan dress with a pink border print.",
+"f": "Cotton voile",
+"pr": 3,
+"mk": ""
+}
+],
+"night": [
+{
+"id": "night-tops-1",
+"n": "The Draped Kaftan Top",
+"cat": "Tops",
+"sw": [
+"#8E1F4E",
+"#E6BCB0",
+"#1F1D38"
+],
+"img": "assets/photos/night-tops-1.jpg",
+"pos": "50% 30%",
+"d": "A magenta satin top with wide draped sleeves.",
+"f": "Satin",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-bottoms-1",
+"n": "Satin Wide-Leg Pants",
+"cat": "Bottoms",
+"sw": [
+"#8E1F4E",
+"#E6BCB0",
+"#1A1615"
+],
+"img": "assets/photos/night-bottoms-1.jpg",
+"pos": "50% 25%",
+"d": "Fluid magenta satin trousers with a wide leg.",
+"f": "Satin",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-coords-1",
+"n": "The Late Dinner Set",
+"cat": "Co-ords",
+"sw": [
+"#8E1F4E"
+],
+"img": "assets/photos/night-coords-1.jpg",
+"pos": "50% 25%",
+"d": "A magenta satin wrap top with wide trousers.",
+"f": "Satin",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-dresses-1",
+"n": "The Late Dinner Kaftan",
+"cat": "Dresses",
+"sw": [
+"#8E1F4E",
+"#E6BCB0",
+"#5A1A33"
+],
+"img": "assets/photos/night-dresses-1.jpg",
+"pos": "50% 12%",
+"d": "A magenta georgette kaftan with tassel ties.",
+"f": "Georgette",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-tops-2",
+"n": "The Embellished Tunic",
+"cat": "Tops",
+"sw": [
+"#E8D2B7",
+"#8E1F4E",
+"#0C3B35"
+],
+"img": "assets/photos/night-tops-2.jpg",
+"pos": "50% 30%",
+"d": "A champagne tunic with hand embroidery at the neck.",
+"f": "Embellished georgette",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-bottoms-2",
+"n": "Embellished Palazzos",
+"cat": "Bottoms",
+"sw": [
+"#CFA46E",
+"#8E1F4E",
+"#1F1D38"
+],
+"img": "assets/photos/night-bottoms-2.jpg",
+"pos": "50% 25%",
+"d": "Gold-embellished palazzos with a quiet shimmer.",
+"f": "Embellished georgette",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-coords-2",
+"n": "The Sunset Soirée Co-ord",
+"cat": "Co-ords",
+"sw": [
+"#1F1D38"
+],
+"img": "assets/photos/night-coords-2.jpg",
+"pos": "50% 25%",
+"d": "A one-shoulder top and sheer layered trousers in navy.",
+"f": "Chiffon",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-dresses-2",
+"n": "The Moonlit Embellished Kaftan",
+"cat": "Dresses",
+"sw": [
+"#E8D2B7",
+"#EFE8DA",
+"#CFA46E"
+],
+"img": "assets/photos/night-dresses-2.jpg",
+"pos": "50% 12%",
+"d": "A champagne kaftan with scattered sequin work.",
+"f": "Embellished georgette",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-tops-3",
+"n": "The One-Shoulder Top",
+"cat": "Tops",
+"sw": [
+"#8E1F4E",
+"#1F1D38",
+"#1A1615"
+],
+"img": "assets/photos/night-tops-3.jpg",
+"pos": "50% 30%",
+"d": "A one-shoulder top with a sheer cape sleeve.",
+"f": "Chiffon",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-bottoms-3",
+"n": "Draped Skirt Pants",
+"cat": "Bottoms",
+"sw": [
+"#1F1D38",
+"#8E1F4E",
+"#EFE8DA"
+],
+"img": "assets/photos/night-bottoms-3.jpg",
+"pos": "50% 25%",
+"d": "Trousers with a draped skirt panel and a side slit.",
+"f": "Chiffon",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-coords-3",
+"n": "The Moonlit Terrace Set",
+"cat": "Co-ords",
+"sw": [
+"#E8D2B7",
+"#CFA46E"
+],
+"img": "assets/photos/night-coords-3.jpg",
+"pos": "50% 25%",
+"d": "A champagne set with a gold leaf print.",
+"f": "Printed satin",
+"pr": 1,
+"mk": ""
+},
+{
+"id": "night-dresses-3",
+"n": "The Sunset Draped Kaftan",
+"cat": "Dresses",
+"sw": [
+"#1F1D38",
+"#8891A3",
+"#EFE8DA"
+],
+"img": "assets/photos/night-dresses-3.jpg",
+"pos": "50% 12%",
+"d": "An off-shoulder navy kaftan with a soft tie waist.",
+"f": "Chiffon",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-tops-4",
+"n": "The Tie-Front Top",
+"cat": "Tops",
+"sw": [
+"#1A1615",
+"#8E1F4E",
+"#E6BCB0"
+],
+"img": "assets/photos/night-tops-4.jpg",
+"pos": "50% 30%",
+"d": "A printed satin top that ties at the front.",
+"f": "Satin",
+"pr": 0,
+"mk": ""
+},
+{
+"id": "night-bottoms-4",
+"n": "Tailored Evening Pants",
+"cat": "Bottoms",
+"sw": [
+"#1A1615",
+"#8E1F4E",
+"#D3B08C"
+],
+"img": "assets/photos/night-bottoms-4.jpg",
+"pos": "50% 25%",
+"d": "Black evening trousers with a pressed crease.",
+"f": "Crepe",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-coords-4",
+"n": "The Cocktail Lounge Set",
+"cat": "Co-ords",
+"sw": [
+"#1A1615"
+],
+"img": "assets/photos/night-coords-4.jpg",
+"pos": "50% 25%",
+"d": "A black satin shirt and wide trousers with a sash.",
+"f": "Satin",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-dresses-4",
+"n": "The Evening Wrap Kaftan",
+"cat": "Dresses",
+"sw": [
+"#1A1615",
+"#7A736D",
+"#E8D2B7"
+],
+"img": "assets/photos/night-dresses-4.jpg",
+"pos": "50% 12%",
+"d": "A black wrap kaftan with fluttering sleeves.",
+"f": "Georgette",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-tops-5",
+"n": "The Statement Sleeve Top",
+"cat": "Tops",
+"sw": [
+"#CFA46E",
+"#1A1615",
+"#8E1F4E"
+],
+"img": "assets/photos/night-tops-5.jpg",
+"pos": "50% 30%",
+"d": "A sheer black top with full, gathered sleeves.",
+"f": "Chiffon",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-bottoms-5",
+"n": "Wrap Skirt",
+"cat": "Bottoms",
+"sw": [
+"#8E1F4E",
+"#D6A697",
+"#EFE8DA"
+],
+"img": "assets/photos/night-bottoms-5.jpg",
+"pos": "50% 25%",
+"d": "A magenta wrap skirt with a high slit and ruffle.",
+"f": "Georgette",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-coords-5",
+"n": "The Riviera Evening Set",
+"cat": "Co-ords",
+"sw": [
+"#8E1F4E",
+"#5A1A33"
+],
+"img": "assets/photos/night-coords-5.jpg",
+"pos": "50% 25%",
+"d": "A printed kaftan top and trousers in berry tones.",
+"f": "Georgette",
+"pr": 0,
+"mk": ""
+},
+{
+"id": "night-dresses-5",
+"n": "The Stella Halter Kaftan",
+"cat": "Dresses",
+"sw": [
+"#5A1A33",
+"#AD4A6C",
+"#E6BCB0"
+],
+"img": "assets/photos/night-dresses-5.jpg",
+"pos": "50% 12%",
+"d": "A berry halter kaftan with a draped cascade.",
+"f": "Georgette",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-tops-6",
+"n": "The Halter Top",
+"cat": "Tops",
+"sw": [
+"#8E1F4E",
+"#EFE8DA",
+"#1F1D38"
+],
+"img": "assets/photos/night-tops-6.jpg",
+"pos": "50% 30%",
+"d": "A berry halter top that falls in soft layers.",
+"f": "Georgette",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-bottoms-6",
+"n": "Sequin Trousers",
+"cat": "Bottoms",
+"sw": [
+"#1A1615",
+"#CFA46E",
+"#8E1F4E"
+],
+"img": "assets/photos/night-bottoms-6.jpg",
+"pos": "50% 25%",
+"d": "Wide black trousers covered in fine sequins.",
+"f": "Sequinned georgette",
+"pr": 2,
+"mk": ""
+},
+{
+"id": "night-coords-6",
+"n": "The Starlight Set",
+"cat": "Co-ords",
+"sw": [
+"#5A1A33"
+],
+"img": "assets/photos/night-coords-6.jpg",
+"pos": "50% 25%",
+"d": "A wine halter top over flowing wide trousers.",
+"f": "Georgette",
+"pr": -1,
+"mk": ""
+},
+{
+"id": "night-dresses-6",
+"n": "The Riviera Embellished Dress",
+"cat": "Dresses",
+"sw": [
+"#1A1615",
+"#7A736D",
+"#CFA46E"
+],
+"img": "assets/photos/night-dresses-6.jpg",
+"pos": "50% 12%",
+"d": "A black dress with gold embroidery and sparkle.",
+"f": "Embellished georgette",
+"pr": 2,
+"mk": ""
+}
+]
+};
+  var CATS = ['All','Tops','Bottoms','Co-ords','Dresses'];
+  var CAT_KEY = {'Tops':'tops', 'Bottoms':'bottoms', 'Co-ords':'coords', 'Dresses':'dresses'};
+  var KEY_CAT = {tops:'Tops', bottoms:'Bottoms', coords:'Co-ords', dresses:'Dresses'};
+  var PAGE = 4, MORE = 8;
+  var BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+  var heart = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M12 19.5s-7-4.3-7-9.2A3.8 3.8 0 0 1 12 8a3.8 3.8 0 0 1 7 2.3c0 4.9-7 9.2-7 9.2z"/></svg>';
+  var colls = {};
+
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+  /* Each style appears in all 8 fabrics. Rounds keep neighbouring cards different styles and fabrics. */
+  /* Only fabric photos passed on the approvals page are shown. A style with none passed yet shows as photographed. */
+  var APPROVED = {"night-bottoms-1": [0, 1, 2, 3, 4, 5, 6, 7], "night-bottoms-2": [0, 1, 2, 3, 4, 5, 6, 7], "night-bottoms-3": [0, 1, 2, 3, 4, 5, 6, 7], "night-bottoms-4": [0, 1, 2, 3, 4, 5, 6, 7], "night-bottoms-5": [0, 1, 2, 3, 4, 5, 6, 7], "night-bottoms-6": [0, 1, 2, 3, 4, 5, 6, 7], "night-coords-1": [0, 1, 2, 3, 4, 5, 6, 7], "night-coords-2": [0, 1, 2, 3, 4, 5, 6, 7], "night-coords-3": [0, 1, 2, 3, 4, 5, 6, 7], "night-coords-4": [0, 1, 2, 3, 4, 5, 6, 7], "night-coords-5": [0, 1, 2, 3, 4, 5, 6, 7], "night-coords-6": [0, 1, 2, 3, 4, 5, 6, 7], "night-dresses-1": [0, 1, 2, 3, 4, 5, 6, 7], "night-dresses-2": [0, 1, 2, 3, 4, 5, 6, 7], "night-dresses-3": [0, 1, 2, 3, 4, 5, 6, 7], "night-dresses-4": [0, 1, 2, 3, 4, 5, 6, 7], "night-dresses-5": [0, 1, 2, 3, 4, 5, 6, 7], "night-dresses-6": [0, 1, 2, 3, 4, 5, 6, 7], "night-tops-1": [0, 1, 2, 3, 4, 5, 6, 7], "night-tops-2": [0, 1, 2, 3, 4, 5, 6, 7], "night-tops-3": [0, 1, 2, 3, 4, 5, 6, 7], "night-tops-4": [0, 1, 2, 3, 4, 5, 6, 7], "night-tops-5": [0, 1, 2, 3, 4, 5, 6, 7], "night-tops-6": [0, 1, 2, 3, 4, 5, 6, 7], "noon-bottoms-1": [0, 1, 2, 3, 4, 5, 6, 7], "noon-bottoms-2": [0, 1, 2, 3, 4, 5, 6, 7], "noon-bottoms-3": [0, 1, 2, 3, 4, 5, 6, 7], "noon-bottoms-4": [0, 1, 2, 3, 4, 5, 6, 7], "noon-bottoms-5": [0, 1, 2, 3, 4, 5, 6, 7], "noon-bottoms-6": [0, 1, 2, 3, 4, 5, 6, 7], "noon-coords-1": [0, 1, 2, 3, 4, 5, 6, 7], "noon-coords-2": [0, 1, 2, 3, 4, 5, 6, 7], "noon-coords-3": [0, 1, 2, 3, 4, 5, 6, 7], "noon-coords-4": [0, 1, 2, 3, 4, 5, 6, 7], "noon-coords-5": [0, 1, 2, 3, 4, 5, 6, 7], "noon-coords-6": [0, 1, 2, 3, 4, 5, 6, 7], "noon-dresses-1": [0, 1, 2, 3, 4, 5, 6, 7], "noon-dresses-2": [0, 1, 2, 3, 4, 5, 6, 7], "noon-dresses-3": [0, 1, 2, 3, 4, 5, 6, 7], "noon-dresses-4": [0, 1, 2, 3, 4, 5, 6, 7], "noon-dresses-5": [0, 1, 2, 3, 4, 5, 6, 7], "noon-dresses-6": [0, 1, 2, 3, 4, 5, 6, 7], "noon-tops-1": [0, 1, 2, 3, 4, 5, 6, 7], "noon-tops-2": [0, 1, 2, 3, 4, 5, 6, 7], "noon-tops-3": [0, 1, 2, 3, 4, 5, 6, 7], "noon-tops-4": [0, 1, 2, 3, 4, 5, 6, 7], "noon-tops-5": [0, 1, 2, 3, 4, 5, 6, 7], "noon-tops-6": [0, 1, 2, 3, 4, 5, 6, 7]};
+  var STRIPS = {"night-bottoms-1": {"src": "assets/fabrics/"}, "night-bottoms-2": {"src": "assets/fabrics/"}, "night-bottoms-3": {"src": "assets/fabrics/"}, "night-bottoms-4": {"src": "assets/fabrics/"}, "night-bottoms-5": {"src": "assets/fabrics/"}, "night-bottoms-6": {"src": "assets/fabrics/"}, "night-coords-1": {"src": "assets/fabrics/"}, "night-coords-2": {"src": "assets/fabrics/"}, "night-coords-3": {"src": "assets/fabrics/"}, "night-coords-4": {"src": "assets/fabrics/"}, "night-coords-5": {"src": "assets/fabrics/"}, "night-coords-6": {"src": "assets/fabrics/"}, "night-dresses-1": {"src": "assets/fabrics/"}, "night-dresses-2": {"src": "assets/fabrics/"}, "night-dresses-3": {"src": "assets/fabrics/"}, "night-dresses-4": {"src": "assets/fabrics/"}, "night-dresses-5": {"src": "assets/fabrics/"}, "night-dresses-6": {"src": "assets/fabrics/"}, "night-tops-1": {"src": "assets/fabrics/"}, "night-tops-2": {"src": "assets/fabrics/"}, "night-tops-3": {"src": "assets/fabrics/"}, "night-tops-4": {"src": "assets/fabrics/"}, "night-tops-5": {"src": "assets/fabrics/"}, "night-tops-6": {"src": "assets/fabrics/"}, "noon-bottoms-1": {"src": "assets/fabrics/"}, "noon-bottoms-2": {"src": "assets/fabrics/"}, "noon-bottoms-3": {"src": "assets/fabrics/"}, "noon-bottoms-4": {"src": "assets/fabrics/"}, "noon-bottoms-5": {"src": "assets/fabrics/"}, "noon-bottoms-6": {"src": "assets/fabrics/"}, "noon-coords-1": {"src": "assets/fabrics/"}, "noon-coords-2": {"src": "assets/fabrics/"}, "noon-coords-3": {"src": "assets/fabrics/"}, "noon-coords-4": {"src": "assets/fabrics/"}, "noon-coords-5": {"src": "assets/fabrics/"}, "noon-coords-6": {"src": "assets/fabrics/"}, "noon-dresses-1": {"src": "assets/fabrics/"}, "noon-dresses-2": {"src": "assets/fabrics/"}, "noon-dresses-3": {"src": "assets/fabrics/"}, "noon-dresses-4": {"src": "assets/fabrics/"}, "noon-dresses-5": {"src": "assets/fabrics/"}, "noon-dresses-6": {"src": "assets/fabrics/"}, "noon-tops-1": {"src": "assets/fabrics/"}, "noon-tops-2": {"src": "assets/fabrics/"}, "noon-tops-3": {"src": "assets/fabrics/"}, "noon-tops-4": {"src": "assets/fabrics/"}, "noon-tops-5": {"src": "assets/fabrics/"}, "noon-tops-6": {"src": "assets/fabrics/"}};
+  function approvedOf(p){ return APPROVED[p.id] || []; }
+  function variantsOf(styles){
+    var out = [], n = styles.length;
+    for (var r = 0; r < 8; r++) for (var i = 0; i < n; i++){ var v = (i + r) % 8; if (approvedOf(styles[i]).indexOf(v) >= 0) out.push({p: styles[i], v: v}); }
+    for (var i = 0; i < n; i++) if (!approvedOf(styles[i]).length) out.push({p: styles[i], v: -1});
+    return out;
+  }
+  function cardHTML(line, p, idx, v){
+    if (v < 0 || approvedOf(p).indexOf(v) < 0) return origCardHTML(p, idx);
+    var f = fabAt(p.line, v), done = outCache[p.id + '|' + f.name];
+    var t = tones[p.line][idx % tones[p.line].length];
+    return '<article class="prod" data-line="' + p.line + '">' +
+      '<figure class="ph ' + t + (done ? '' : ' pending') + '" data-pid="' + p.id + '" data-v="' + v + '"><div class="ph-media"><img class="ph-img" src="' + (done || BLANK) + '" alt="" style="object-position:' + p.pos + '"></div>' +
+      '<span class="quick" aria-hidden="true">Choose your fabric</span></figure>' +
+      '<button class="iconbtn save" type="button" aria-pressed="false" aria-label="Save ' + esc(p.n) + ' in ' + f.name + '">' + heart + '</button>' +
+      '<h3><a href="#p-' + p.id + '-f' + v + '">' + esc(p.n) + '</a></h3>' +
+      '<p class="fab-line">In ' + f.name + '</p>' +
+      '<p class="desc">' + esc(p.d) + '</p>' +
+      '<span class="meta"><span>' + p.cat + '</span><span>[PRICE]</span></span>' +
+    '</article>';
+  }
+  function origCardHTML(p, idx){
+    var t = tones[p.line][idx % tones[p.line].length];
+    return '<article class="prod" data-line="' + p.line + '">' +
+      '<figure class="ph ' + t + '"><div class="ph-media"><img class="ph-img" src="' + p.img + '" alt="" loading="lazy" style="object-position:' + p.pos + '"></div>' +
+      '<span class="quick" aria-hidden="true">Choose your fabric</span></figure>' +
+      '<button class="iconbtn save" type="button" aria-pressed="false" aria-label="Save ' + esc(p.n) + '">' + heart + '</button>' +
+      '<h3><a href="#p-' + p.id + '">' + esc(p.n) + '</a></h3>' +
+      '<p class="fab-line">4 solids · 4 prints</p>' +
+      '<p class="desc">' + esc(p.d) + '</p>' +
+      '<span class="meta"><span>' + p.cat + '</span><span>[PRICE]</span></span>' +
+    '</article>';
+  }
+  var dyeQueue = Promise.resolve();
+  function dyeFig(fig){
+    var p = byId[fig.getAttribute('data-pid')], f = fabAt(p.line, +fig.getAttribute('data-v')), img = fig.querySelector('img');
+    dyeQueue = dyeQueue
+      .then(function(){ return new Promise(function(r){ setTimeout(r, 0); }); })
+      .then(function(){ return dressIn(p, f); })
+      .then(function(url){ img.src = url; fig.classList.remove('pending'); })
+      .catch(function(){ img.src = p.img; fig.classList.remove('pending'); });
+  }
+  var dyeIO = ('IntersectionObserver' in window) ? new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting){ dyeIO.unobserve(e.target); dyeFig(e.target); } });
+  }, {rootMargin:'500px 0px'}) : null;
+  function observeDye(scope){
+    [].slice.call(scope.querySelectorAll('figure.pending')).forEach(function(f){ if (dyeIO) dyeIO.observe(f); else dyeFig(f); });
+  }
+  function buildColl(el, cfg){
+    el.innerHTML =
+      '<div class="coll-bar"><div class="filters" role="group" aria-label="' + cfg.label + '">' +
+        cfg.chips.map(function(c, i){ return '<button class="chip" type="button" data-val="' + c.val + '" aria-pressed="' + (i === 0) + '">' + c.label + '</button>'; }).join('') +
+      '</div><span class="count" aria-live="polite"></span></div>' +
+      '<div class="grid"></div>' +
+      '<div class="more-wrap"><button class="btn btn-ghost" type="button">Show more</button></div>';
+    var st = {cfg:cfg, val:cfg.chips[0].val, shown:PAGE, prev:0, el:el, grid:el.querySelector('.grid'), count:el.querySelector('.count'), more:el.querySelector('.more-wrap button')};
+    colls[cfg.key] = st;
+    [].slice.call(el.querySelectorAll('.chip')).forEach(function(b){
+      b.addEventListener('click', function(){ setFilter(st, b.getAttribute('data-val')); });
+    });
+    st.more.addEventListener('click', function(){ loadMore(st); });
+    /* More pieces load on their own as the visitor scrolls near the end of the grid */
+    if ('IntersectionObserver' in window){
+      st.auto = true;
+      el.querySelector('.more-wrap').classList.add('auto');
+      st.io = new IntersectionObserver(function(es){ st.near = es[0].isIntersecting; if (st.near) loadMore(st); }, {rootMargin:'0px 0px 700px 0px'});
+      st.io.observe(el.querySelector('.more-wrap'));
+    }
+    render(st, false);
+    return st;
+  }
+  /* Home page shows each style as photographed; fabric photos live on the style and detail pages. */
+  function list(st){
+    var styles = st.cfg.items(st.val);
+    return st.cfg.originals ? styles.map(function(p){ return {p:p, v:-1}; }) : variantsOf(styles);
+  }
+  function render(st, append){
+    var items = list(st), visible = items.slice(0, st.shown);
+    st.grid.innerHTML = visible.map(function(o, i){ return cardHTML(o.p.line, o.p, i, o.v); }).join('');
+    if (append){
+      var cards = st.grid.querySelectorAll('.prod');
+      for (var k = 0; k < cards.length; k++){
+        if (k < st.prev){ cards[k].style.animation = 'none'; }
+        else { cards[k].style.animationDelay = ((k - st.prev) * 70) + 'ms'; }
+      }
+    }
+    st.count.textContent = 'Showing ' + visible.length + ' of ' + items.length + ' pieces';
+    st.more.parentNode.hidden = visible.length >= items.length;
+    st.more.textContent = st.auto ? 'Loading more pieces' : 'Show more (' + (items.length - visible.length) + ' more)';
+    if (st.auto && st.near && visible.length < items.length) setTimeout(function(){ if (st.near) loadMore(st); }, 60);
+    [].slice.call(st.el.querySelectorAll('.chip')).forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-val') === st.val)); });
+    observeDye(st.grid);
+  }
+  function loadMore(st){
+    var add = Math.min(MORE, list(st).length - st.shown);
+    if (add <= 0 || st.loading) return;
+    for (var k = 0; k < add; k++){ var sk = document.createElement('div'); sk.className = 'skel'; st.grid.appendChild(sk); }
+    if (st.loading) return;
+    st.loading = true; st.more.disabled = true;
+    setTimeout(function(){ st.prev = st.shown; st.shown += add; st.more.disabled = false; st.loading = false; render(st, true); }, reduce ? 0 : 280);
+  }
+  function setFilter(st, val){ st.val = val; st.shown = PAGE; st.prev = 0; render(st, false); }
+  function initCollections(){
+    ['noon','night'].forEach(function(k){
+      buildColl(document.querySelector('.coll[data-coll="' + k + '"]'), {
+        key:k, label:'Filter by style', originals:true,
+        chips: CATS.map(function(c){ return {label:c, val:c}; }),
+        items: function(val){ return products[k].filter(function(q){ return val === 'All' || q.cat === val; }); }
+      });
+    });
+  }
+
+  /* ---------- Style detail page ---------- */
+  var homeEl = document.getElementById('home'), pdpEl = document.getElementById('pdp');
+  var toastEl = document.getElementById('toast'), bagN = document.getElementById('bagN'), bagBtn = document.getElementById('bagBtn');
+  var byId = {};
+  ['noon','night'].forEach(function(k){ products[k].forEach(function(p){ p.line = k; byId[p.id] = p; }); });
+  var COLOR_NAMES = {'#8E1F4E':'Magenta','#E6BCB0':'Blush','#1F1D38':'Midnight navy','#1A1615':'Black','#0C3B35':'Deep teal','#E8D2B7':'Champagne','#CFA46E':'Gold','#EFE8DA':'Ivory','#44574A':'Forest green','#8F9478':'Sage','#D3B08C':'Sand','#D6A697':'Rose','#E9A9A6':'Pink','#5A1A33':'Berry','#8891A3':'Dusk blue','#7A736D':'Smoke','#AD4A6C':'Rose berry'};
+  var PRINTS = {
+    noon: [
+      {name:'Palm print', bg:'repeating-linear-gradient(60deg, #44574A 0 6px, #EFE8DA 6px 14px)'},
+      {name:'Sage stripe', bg:'repeating-linear-gradient(90deg, #8F9478 0 5px, #EFE8DA 5px 11px)'},
+      {name:'Market floral', bg:'radial-gradient(#8E1F4E 24%, rgba(0,0,0,0) 28%) 0 0 / 12px 12px, #EFE8DA'},
+      {name:'Pink block print', bg:'radial-gradient(#E9A9A6 26%, rgba(0,0,0,0) 30%) 0 0 / 10px 10px, #F4EDE4'}
+    ],
+    night: [
+      {name:'Berry floral', bg:'radial-gradient(#E6BCB0 22%, rgba(0,0,0,0) 26%) 0 0 / 11px 11px, #5A1A33'},
+      {name:'Gold leaf', bg:'repeating-linear-gradient(45deg, #CFA46E 0 3px, #E8D2B7 3px 9px)'},
+      {name:'Midnight sparkle', bg:'radial-gradient(#CFA46E 16%, rgba(0,0,0,0) 20%) 0 0 / 8px 8px, #1A1615'},
+      {name:'Magenta check', bg:'linear-gradient(90deg, rgba(247,243,236,.4) 50%, rgba(0,0,0,0) 50%) 0 0 / 12px 12px, linear-gradient(rgba(247,243,236,.4) 50%, rgba(0,0,0,0) 50%) 0 0 / 12px 12px, #8E1F4E'}
+    ]
+  };
+  var SIZES = ['XS','S','M','L','XL','2XL','3XL'];
+  var SG = [['XS',32,26,35],['S',34,28,37],['M',36,30,39],['L',38,32,41],['XL',40,34,43],['2XL',42,36,45],['3XL',44,38,47]];
+  var LINES = {noon:{name:'Noon collection', anchor:'noon', mood:'Noon'}, night:{name:'Night collection', anchor:'night', mood:'Night'}};
+  var STYLE_TXT = {
+    noon: {
+      'Tops':'Cut loose through the body, so it moves when you do. Wear it with any of our Noon bottoms, or over swimwear on a beach day.',
+      'Bottoms':'An easy waist and a relaxed leg, made for long days on your feet. Pair it with any Noon top.',
+      'Co-ords':'Two pieces made to be worn together, and just as easy apart. Wear the top with jeans, or the trousers with a plain shirt.',
+      'Dresses':'One piece and you are ready. It stays cool in the heat and falls in long, easy lines.'
+    },
+    night: {
+      'Tops':'A top with presence for the evening. Wear it with our Night trousers or a long skirt.',
+      'Bottoms':'Evening trousers and skirts that move beautifully when you walk. Pair them with any Night top.',
+      'Co-ords':'A complete evening look in two pieces. Wear them together, or split them up with other Night pieces.',
+      'Dresses':'Long, fluid and ready for an occasion. Add a clutch and you are dressed.'
+    }
+  };
+  var FIT_TXT = 'A relaxed fit with room to move. If you are between sizes, choose the smaller size for a closer drape or the larger one for more room. Use the size guide to compare your measurements.';
+  var COMP = {'Tops':'Bottoms', 'Bottoms':'Tops', 'Co-ords':'Dresses', 'Dresses':'Co-ords'};
+  var arrowSvg = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var checkSvg = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  function careFor(f){
+    f = f.toLowerCase();
+    if (/sequin|embellish/.test(f)) return 'The embellishment is finished by hand. Dry clean only, and store it flat, folded in tissue.';
+    if (/satin/.test(f)) return 'A fluid satin with a soft sheen. Dry clean, or hand wash cold and hang to dry.';
+    if (/georgette|chiffon|crepe/.test(f)) return 'Light and floaty. Hand wash cold or dry clean, and do not wring.';
+    if (/linen/.test(f)) return 'Breathable linen that softens with every wash. Machine wash cold on a gentle cycle and dry in the shade.';
+    if (/embroider/.test(f)) return 'Light, airy cotton with embroidery. Turn it inside out, wash cold on a gentle cycle and dry in the shade.';
+    return 'Light, airy cotton. Machine wash cold on a gentle cycle and dry in the shade.';
+  }
+  function viewsFor(p){
+    var top = p.cat === 'Dresses' ? '16%' : (p.id.indexOf('night-tops') === 0 ? '34%' : '22%');
+    return [
+      {label:'Full look', z:1, o:'50% 50%'},
+      {label:'Fabric close-up', z:1.7, o:'50% 56%'},
+      {label:'Neckline and detail', z:1.8, o:'50% ' + top}
+    ];
+  }
+  function imgStyle(p, v){ return 'object-position:' + p.pos + '; transform:scale(' + v.z + '); transform-origin:' + v.o; }
+  function acc(title, body, open){ return '<details' + (open ? ' open' : '') + '><summary>' + title + '</summary><div class="acc-body">' + body + '</div></details>'; }
+
+
+  /* ---------- Fabric engine: recolours the garment in the photo ---------- */
+  var FABRICS = {
+    noon: {
+      solid: [{name:'Sage', c:[156,175,148]}, {name:'Ivory', c:[240,234,222]}, {name:'Blush pink', c:[232,170,170]}, {name:'Sand', c:[208,178,138]}],
+      printed: [{name:'Palm print', draw:'palm'}, {name:'Sage stripe', draw:'stripe'}, {name:'Market floral', draw:'floral'}, {name:'Pink block print', draw:'block'}]
+    },
+    night: {
+      solid: [{name:'Magenta', c:[150,30,96]}, {name:'Midnight navy', c:[32,38,72]}, {name:'Black', c:[26,23,24]}, {name:'Champagne', c:[226,201,164]}],
+      printed: [{name:'Zari brocade', draw:'zari'}, {name:'Midnight paisley', draw:'paisley'}, {name:'Starlight sequin', draw:'starlight'}, {name:'Gilded vine', draw:'gilded'}]
+    }
+  };
+  function fabAt(line, v){ return v < 4 ? FABRICS[line].solid[v] : FABRICS[line].printed[v - 4]; }
+  function goldGrad(g, x0, y0, x1, y1){ var gr = g.createLinearGradient(x0, y0, x1, y1); gr.addColorStop(0, '#F6E2A6'); gr.addColorStop(.42, '#C99A4C'); gr.addColorStop(.68, '#F0D48E'); gr.addColorStop(1, '#A47533'); return gr; }
+  function paisleyPath(g, sz){ g.beginPath(); g.moveTo(0, -sz); g.bezierCurveTo(sz * .95, -sz * .85, sz * 1.05, sz * .6, 0, sz * .8); g.bezierCurveTo(-sz * .8, sz * .95, -sz, -sz * .05, -sz * .38, -sz * .45); g.bezierCurveTo(-sz * .12, -sz * .62, -sz * .22, -sz * .88, 0, -sz); g.closePath(); }
+  function rng(seed){ return function(){ seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+  function wrapDraw(T, fn){ for (var dx = -1; dx <= 1; dx++) for (var dy = -1; dy <= 1; dy++) fn(dx * T, dy * T); }
+  function leaf(g, x, y, len, wid, ang, col){ g.save(); g.translate(x, y); g.rotate(ang); g.fillStyle = col; g.beginPath(); g.ellipse(len / 2, 0, len / 2, wid / 2, 0, 0, Math.PI * 2); g.fill(); g.restore(); }
+  function flower(g, x, y, r, petal, centre){ for (var k = 0; k < 5; k++){ var a = k / 5 * Math.PI * 2; g.fillStyle = petal; g.beginPath(); g.ellipse(x + Math.cos(a) * r * .55, y + Math.sin(a) * r * .55, r * .48, r * .3, a, 0, Math.PI * 2); g.fill(); } g.fillStyle = centre; g.beginPath(); g.arc(x, y, r * .22, 0, Math.PI * 2); g.fill(); }
+  var tileCache = {};
+  function tile(kind, T){
+    var key = kind + T; if (tileCache[key]) return tileCache[key];
+    var c = document.createElement('canvas'); c.width = c.height = T; var g = c.getContext('2d'), R = rng(kind.length * 977 + 13);
+    function bg(col){ g.fillStyle = col; g.fillRect(0, 0, T, T); }
+    if (kind === 'palm'){
+      bg('#EFE8DA');
+      [[.12,.18,.55],[.62,.62,2.5],[.55,.05,1.2],[.1,.75,5.4]].forEach(function(f){
+        wrapDraw(T, function(ox, oy){
+          var x = f[0] * T + ox, y = f[1] * T + oy, a = f[2], len = T * .6;
+          g.strokeStyle = '#41604A'; g.lineWidth = T * .012; g.beginPath(); g.moveTo(x, y);
+          g.quadraticCurveTo(x + Math.cos(a) * len * .5 - Math.sin(a) * len * .08, y + Math.sin(a) * len * .5 + Math.cos(a) * len * .08, x + Math.cos(a) * len, y + Math.sin(a) * len); g.stroke();
+          for (var i = 1; i < 13; i++){
+            var t = i / 13, px = x + Math.cos(a) * len * t, py = y + Math.sin(a) * len * t, l = T * (.3 - .018 * i);
+            leaf(g, px, py, l, T * .028, a + .75, i % 3 ? '#41604A' : '#6E8C68');
+            leaf(g, px, py, l, T * .028, a - .75, i % 3 ? '#6E8C68' : '#41604A');
+          }
+        });
+      });
+    } else if (kind === 'stripe'){
+      bg('#EFE8DA'); g.fillStyle = '#8FA286';
+      for (var x = 0; x < T; x += T / 4){ g.fillRect(x, 0, T * .085, T); g.fillRect(x + T * .14, 0, T * .02, T); }
+    } else if (kind === 'floral'){
+      bg('#F4EEE4');
+      [[.25,.25,.15],[.75,.4,.12],[.4,.75,.13],[.9,.9,.1],[.08,.6,.09]].forEach(function(f){ wrapDraw(T, function(ox, oy){
+        leaf(g, f[0] * T + ox, f[1] * T + oy, T * f[2] * 1.4, T * f[2] * .5, .8, '#6E8C68');
+        flower(g, f[0] * T + ox, f[1] * T + oy, T * f[2], '#A02A62', '#E9B9C6');
+      }); });
+    } else if (kind === 'block'){
+      bg('#F7F0E7');
+      for (var gy = 0; gy < 3; gy++) for (var gx = 0; gx < 3; gx++){
+        var cx = (gx + (gy % 2) * .5) * T / 3 + T / 6, cy = gy * T / 3 + T / 6;
+        wrapDraw(T, function(ox, oy){
+          g.strokeStyle = '#D58A8C'; g.lineWidth = T * .018; g.beginPath(); g.arc(cx + ox, cy + oy, T * .07, 0, Math.PI * 2); g.stroke();
+          g.fillStyle = '#D58A8C'; g.beginPath(); g.arc(cx + ox, cy + oy, T * .025, 0, Math.PI * 2); g.fill();
+          for (var k = 0; k < 4; k++){ var a = k * Math.PI / 2 + Math.PI / 4; g.beginPath(); g.arc(cx + ox + Math.cos(a) * T * .11, cy + oy + Math.sin(a) * T * .11, T * .014, 0, Math.PI * 2); g.fill(); }
+        });
+      }
+    } else if (kind === 'berry'){
+      bg('#4E1734');
+      [[.25,.28,.16,'#E8BFB3'],[.72,.5,.13,'#C2527A'],[.35,.8,.12,'#E8BFB3'],[.88,.12,.1,'#C2527A']].forEach(function(f){ wrapDraw(T, function(ox, oy){
+        leaf(g, f[0] * T + ox, f[1] * T + oy, T * f[2] * 1.5, T * f[2] * .45, 2.3, '#7A3556');
+        flower(g, f[0] * T + ox, f[1] * T + oy, T * f[2], f[3], '#F2D9A8');
+      }); });
+    } else if (kind === 'goldleaf'){
+      bg('#E6CFAE');
+      for (var i = 0; i < 14; i++){ var lx = R() * T, ly = R() * T, la = .5 + R() * .6; wrapDraw(T, function(ox, oy){ leaf(g, lx + ox, ly + oy, T * .16, T * .05, la, i % 3 ? '#B8894A' : '#9C7238'); }); }
+    } else if (kind === 'sparkle'){
+      bg('#17141B');
+      for (var i = 0; i < 70; i++){ var sx = R() * T, sy = R() * T, sr = T * (.004 + R() * .012); g.fillStyle = R() > .3 ? '#D9B56E' : '#F1E3C0'; g.beginPath(); g.arc(sx, sy, sr, 0, Math.PI * 2); g.fill(); }
+    } else if (kind === 'zari'){
+      bg('#7A1650');
+      g.strokeStyle = 'rgba(246,200,226,.14)'; g.lineWidth = Math.max(1, T * .006);
+      for (var q = -T; q <= T * 2; q += T / 4){ g.beginPath(); g.moveTo(q, 0); g.lineTo(q + T, T); g.stroke(); g.beginPath(); g.moveTo(q, T); g.lineTo(q + T, 0); g.stroke(); }
+      [[.5,.5,1],[0,0,1],[0,.5,.55],[.5,0,.55]].forEach(function(mo){ wrapDraw(T, function(ox, oy){
+        var cx = mo[0] * T + ox, cy = mo[1] * T + oy, sc = mo[2], gg = goldGrad(g, cx - T * .2, cy - T * .2, cx + T * .2, cy + T * .2);
+        for (var k = 0; k < 8; k++){ leaf(g, cx, cy, T * .17 * sc, T * .055 * sc, k * Math.PI / 4, gg); }
+        g.strokeStyle = gg; g.lineWidth = T * .01 * sc; g.beginPath(); g.arc(cx, cy, T * .11 * sc, 0, Math.PI * 2); g.stroke();
+        g.fillStyle = gg; g.beginPath(); g.arc(cx, cy, T * .045 * sc, 0, Math.PI * 2); g.fill();
+        for (var k = 0; k < 8; k++){ var a = k * Math.PI / 4 + Math.PI / 8; g.beginPath(); g.arc(cx + Math.cos(a) * T * .2 * sc, cy + Math.sin(a) * T * .2 * sc, T * .012 * sc, 0, Math.PI * 2); g.fill(); }
+      }); });
+    } else if (kind === 'paisley'){
+      bg('#1B2244');
+      for (var i = 0; i < 60; i++){ g.fillStyle = 'rgba(232,206,150,' + (.25 + R() * .4).toFixed(2) + ')'; g.beginPath(); g.arc(R() * T, R() * T, T * (.004 + R() * .006), 0, Math.PI * 2); g.fill(); }
+      [[.3,.3,.4,.2],[.76,.74,3.6,.18],[.82,.2,1.9,.1],[.2,.82,5,.1]].forEach(function(pz){ wrapDraw(T, function(ox, oy){
+        var sz = T * pz[3]; g.save(); g.translate(pz[0] * T + ox, pz[1] * T + oy); g.rotate(pz[2]);
+        g.fillStyle = goldGrad(g, -sz, -sz, sz, sz); paisleyPath(g, sz); g.fill();
+        g.save(); g.scale(.66, .66); g.fillStyle = '#1B2244'; paisleyPath(g, sz); g.fill(); g.restore();
+        g.save(); g.scale(.4, .4); g.fillStyle = '#B8486F'; paisleyPath(g, sz); g.fill(); g.restore();
+        g.fillStyle = '#E8CE96'; for (var k = 0; k < 9; k++){ var a = -Math.PI / 2 + k / 9 * Math.PI * 1.6; g.beginPath(); g.arc(Math.cos(a) * sz * 1.18, Math.sin(a) * sz * 1.05, sz * .06, 0, Math.PI * 2); g.fill(); }
+        g.restore();
+      }); });
+    } else if (kind === 'starlight'){
+      bg('#121014');
+      var step = T / 7;
+      for (var yy = 0; yy < 7; yy++) for (var xx = 0; xx < 7; xx++){
+        var sx = (xx + (yy % 2) * .5) * step + (R() - .5) * step * .3, sy = yy * step + step / 2 + (R() - .5) * step * .3, sr = step * (.34 + R() * .1);
+        wrapDraw(T, function(ox, oy){
+          var gx = sx + ox, gy = sy + oy, rg = g.createRadialGradient(gx - sr * .3, gy - sr * .3, sr * .1, gx, gy, sr);
+          var hi = R() > .5;
+          rg.addColorStop(0, hi ? '#FFF2CC' : '#E9CF93'); rg.addColorStop(.55, '#C79A4E'); rg.addColorStop(1, '#5E4318');
+          g.fillStyle = rg; g.beginPath(); g.arc(gx, gy, sr, 0, Math.PI * 2); g.fill();
+        });
+      }
+    } else if (kind === 'gilded'){
+      bg('#3E1027');
+      [[0,.1,.9],[0,.6,.9]].forEach(function(vn){ wrapDraw(T, function(ox, oy){
+        var x0 = vn[0] * T + ox, y0 = vn[1] * T + oy, gg = goldGrad(g, x0, y0, x0 + T, y0 + T * .4);
+        g.strokeStyle = gg; g.lineWidth = T * .012; g.beginPath(); g.moveTo(x0, y0);
+        g.bezierCurveTo(x0 + T * .3, y0 - T * .12, x0 + T * .6, y0 + T * .2, x0 + T, y0); g.stroke();
+        for (var k = 1; k < 8; k++){
+          var t = k / 8, lx = x0 + T * t, ly = y0 + Math.sin(t * Math.PI * 2) * T * .06, up = k % 2 ? -1 : 1;
+          leaf(g, lx, ly, T * .15, T * .06, up * (1.1 + R() * .3), gg);
+          g.strokeStyle = '#8C6A2E'; g.lineWidth = Math.max(1, T * .004);
+          g.beginPath(); g.moveTo(lx, ly); g.lineTo(lx + Math.cos(up * 1.2) * T * .13, ly + Math.sin(up * 1.2) * T * .13); g.stroke();
+        }
+      }); });
+    } else if (kind === 'check'){
+      bg('#8E1F5E'); g.fillStyle = 'rgba(244,224,234,.24)';
+      for (var x = 0; x < T; x += T / 3){ g.fillRect(x, 0, T / 6, T); g.fillRect(0, x, T, T / 6); }
+    }
+    tileCache[key] = c; return c;
+  }
+  var swatchUrl = {};
+  function swatchBg(f){
+    if (f.c) return 'rgb(' + f.c.join(',') + ')';
+    if (!swatchUrl[f.draw]) swatchUrl[f.draw] = tile(f.draw, 120).toDataURL('image/png');
+    return 'url(' + swatchUrl[f.draw] + ') center / 60px 60px';
+  }
+  var imgPromises = {}, prepCache = {}, outCache = {};
+  function loadImg(src){
+    if (!imgPromises[src]) imgPromises[src] = new Promise(function(res, rej){ var i = new Image(); i.onload = function(){ res(i); }; i.onerror = rej; i.src = src; });
+    return imgPromises[src];
+  }
+  function boxBlur(src, w, h, r){
+    var tmp = new Float32Array(w * h), out = new Float32Array(w * h), x, y, acc, n;
+    for (y = 0; y < h; y++){ acc = 0; n = 0; for (x = -r; x < w; x++){ if (x + r < w){ acc += src[y * w + x + r]; n++; } if (x - r - 1 >= 0){ acc -= src[y * w + x - r - 1]; n--; } if (x >= 0) tmp[y * w + x] = acc / n; } }
+    for (x = 0; x < w; x++){ acc = 0; n = 0; for (y = -r; y < h; y++){ if (y + r < h){ acc += tmp[(y + r) * w + x]; n++; } if (y - r - 1 >= 0){ acc -= tmp[(y - r - 1) * w + x]; n--; } if (y >= 0) out[y * w + x] = acc / n; } }
+    return out;
+  }
+  function prep(p){
+    if (prepCache[p.id]) return prepCache[p.id];
+    prepCache[p.id] = Promise.all([loadImg(p.img), loadImg(p.mk)]).then(function(r){
+      var im = r[0], mk = r[1], w = im.naturalWidth, h = im.naturalHeight;
+      var c = document.createElement('canvas'); c.width = w; c.height = h; var g = c.getContext('2d');
+      g.drawImage(im, 0, 0); var orig = g.getImageData(0, 0, w, h);
+      g.clearRect(0, 0, w, h); g.drawImage(mk, 0, 0, w, h); var md = g.getImageData(0, 0, w, h).data;
+      var N = w * h, A = new Float32Array(N), L = new Float32Array(N), d = orig.data, sum = 0, wsum = 0, i;
+      for (i = 0; i < N; i++){
+        A[i] = md[i * 4] / 255;
+        L[i] = .2126 * d[i * 4] + .7152 * d[i * 4 + 1] + .0722 * d[i * 4 + 2];
+        if (A[i] > .5){ sum += L[i] * A[i]; wsum += A[i]; }
+      }
+      var mean = Math.max(8, sum / Math.max(1, wsum));
+      var printed = p.pr >= 0;
+      var Lb = boxBlur(L, w, h, Math.max(3, Math.round(Math.min(w, h) / (printed ? 9 : 40))));
+      if (printed) Lb = boxBlur(Lb, w, h, Math.max(3, Math.round(Math.min(w, h) / 14)));
+      var k = printed ? 1 : (mean < 45 ? .7 : .35), cf = printed ? .7 : .85, S = new Float32Array(N), v;
+      for (i = 0; i < N; i++){
+        if (A[i] < .01) continue;
+        v = ((1 - k) * L[i] + k * Lb[i]) / mean;
+        v = 1 + (v - 1) * cf;
+        S[i] = v < .3 ? .3 : (v > 1.6 ? 1.6 : v);
+      }
+      return {w:w, h:h, orig:orig, A:A, S:S, canvas:c};
+    });
+    return prepCache[p.id];
+  }
+  function vIndex(line, name){ var a = FABRICS[line].solid.concat(FABRICS[line].printed); for (var i = 0; i < a.length; i++) if (a[i].name === name) return i; return -1; }
+  function dressIn(p, f){
+    var v = vIndex(p.line, f.name), key = p.id + '|' + f.name, st = STRIPS[p.id];
+    if (outCache[key]) return Promise.resolve(outCache[key]);
+    if (v < 0 || approvedOf(p).indexOf(v) < 0 || !st) return Promise.reject(new Error('not approved'));
+    outCache[key] = 'assets/fabrics/' + p.id + '-' + v + '.jpg';
+    return Promise.resolve(outCache[key]);
+  }
+  function dressInLive(p, f){
+    var key = p.id + '|' + f.name;
+    if (outCache[key]) return Promise.resolve(outCache[key]);
+    return prep(p).then(function(P){
+      var w = P.w, h = P.h, N = w * h, d = P.orig.data, out = new ImageData(w, h), o = out.data, A = P.A, S = P.S, i, a, sv, t0, t1, t2, tx = null, T = 0;
+      o.set(d);
+      if (f.draw){
+        T = Math.max(24, Math.round(Math.min(w, h * .75) / (f.draw === 'palm' ? 2.6 : 4.2)));
+        tx = tile(f.draw, T).getContext('2d').getImageData(0, 0, T, T).data;
+      }
+      for (var y = 0; y < h; y++) for (var x = 0; x < w; x++){
+        i = y * w + x; a = A[i]; if (a < .01) continue;
+        if (tx){ var j = ((y % T) * T + (x % T)) * 4; t0 = tx[j]; t1 = tx[j + 1]; t2 = tx[j + 2]; }
+        else { t0 = f.c[0]; t1 = f.c[1]; t2 = f.c[2]; }
+        sv = S[i];
+        if (sv <= 1){ t0 *= sv; t1 *= sv; t2 *= sv; }
+        else { var e = (sv - 1) * .55; t0 += (255 - t0) * e; t1 += (255 - t1) * e; t2 += (255 - t2) * e; }
+        o[i * 4] = d[i * 4] * (1 - a) + t0 * a;
+        o[i * 4 + 1] = d[i * 4 + 1] * (1 - a) + t1 * a;
+        o[i * 4 + 2] = d[i * 4 + 2] * (1 - a) + t2 * a;
+      }
+      P.canvas.getContext('2d').putImageData(out, 0, 0);
+      outCache[key] = P.canvas.toDataURL('image/jpeg', .92);
+      return outCache[key];
+    });
+  }
+  function showFabricPhoto(){
+    var p = ps.p, src = p.img, f = ps.fi >= 0 ? fabricList()[ps.fi] : null, ticket = ++ps.ticket;
+    var stage = document.getElementById('stage'), label = document.getElementById('stageFab');
+    function apply(url){
+      if (!ps || ps.p !== p || ticket !== ps.ticket) return;
+      document.getElementById('stageImg').src = url;
+      [].slice.call(pdpEl.querySelectorAll('.thumb img')).forEach(function(im){ im.src = url; });
+      stage.classList.remove('dyeing');
+      label.hidden = !f; label.textContent = f ? 'Shown in ' + f.name : '';
+    }
+    if (!f){ apply(src); return; }
+    stage.classList.add('dyeing');
+    dressIn(p, f).then(apply).catch(function(){ apply(src); label.hidden = false; label.textContent = 'Photo in ' + f.name + ' coming soon'; });
+  }
+
+  var ps = null, homeScroll = 0, homeHash = '', bag = 0, toastTimer = 0, inPage = false;
+  function fabricList(){ return FABRICS[ps.p.line][ps.tab]; }
+  function renderPDP(){
+    var p = ps.p, L = LINES[p.line], night = p.line === 'night';
+    pdpEl.classList.toggle('dark-zone', night);
+    var views = viewsFor(p);
+    var rel = products[p.line].filter(function(q){ return q.cat === COMP[p.cat]; }).slice(0, 4);
+    pdpEl.innerHTML =
+      '<div class="wrap">' +
+        '<nav class="crumbs" aria-label="Breadcrumb"><button type="button" class="back" id="pdpBack"><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true" style="transform:scaleX(-1)"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Back</button>' +
+          '<a href="#top">Home</a><span aria-hidden="true">/</span><a href="#' + L.anchor + '">' + L.name + '</a><span aria-hidden="true">/</span><a href="#s-' + CAT_KEY[p.cat] + '">' + p.cat + '</a></nav>' +
+        '<div class="pdp-grid">' +
+          '<div class="gallery">' +
+            '<div class="thumbs" role="group" aria-label="Choose a view">' +
+              views.map(function(v, i){ return '<button type="button" class="thumb" data-view="' + i + '" aria-pressed="' + (i === 0) + '" aria-label="' + v.label + '"><img src="' + p.img + '" alt="" style="' + imgStyle(p, v) + '"></button>'; }).join('') +
+            '</div>' +
+            '<div class="stage" id="stage"><img id="stageImg" src="' + p.img + '" alt="' + esc(p.n) + '" style="' + imgStyle(p, views[0]) + '"><span class="stage-label" id="stageLabel">' + views[0].label + '</span><span class="stage-fab" id="stageFab" hidden></span></div>' +
+          '</div>' +
+          '<div class="info">' +
+            '<p class="eyebrow pdp-line">' + (night ? '<i class="crescent"></i>' : '<i class="dot"></i>') + L.name + ' · ' + p.cat + '</p>' +
+            '<div class="pdp-title" style="margin-top:-12px"><h1 id="pdpTitle" tabindex="-1">' + esc(p.n) + '</h1><p class="pdp-desc">' + esc(p.d) + '</p><p class="pdp-price">[PRICE]</p></div>' +
+            '<div class="opt opt-fabric"><div class="opt-head"><span>Choose your fabric</span><b id="fabName"></b></div>' +
+              '<div class="tabs" role="group" aria-label="Fabric type"><button type="button" data-ftab="solid">Solid</button><button type="button" data-ftab="printed">Printed</button></div>' +
+              '<div class="swatches" id="pdpSw" role="group" aria-label="Fabrics"></div>' +
+              '<p class="opt-note">' + esc(p.f) + ' · 4 solids and 4 prints. The photo changes to show the fabric you pick.</p>' +
+              '<p class="hint" id="fabHint" aria-live="polite"></p></div>' +
+            '<div class="opt"><div class="opt-head"><span>Size</span><button type="button" class="textlink" id="sgBtn" aria-expanded="false" aria-controls="sg">Size guide</button></div>' +
+              '<div class="sizes" id="sizes" role="group" aria-label="Sizes">' + SIZES.map(function(z){ return '<button type="button" class="size" data-size="' + z + '" aria-pressed="false">' + z + '</button>'; }).join('') + '</div>' +
+              '<div class="sg" id="sg" hidden><table><caption>Body measurements in inches</caption><thead><tr><th scope="col">Size</th><th scope="col">Bust</th><th scope="col">Waist</th><th scope="col">Hip</th></tr></thead><tbody>' +
+                SG.map(function(r){ return '<tr><th scope="row">' + r[0] + '</th><td>' + r[1] + '</td><td>' + r[2] + '</td><td>' + r[3] + '</td></tr>'; }).join('') +
+              '</tbody></table></div>' +
+              '<p class="hint" id="sizeHint" aria-live="polite"></p></div>' +
+            '<ol class="journey" id="journey" aria-label="Your choices so far"></ol>' +
+            '<div class="buy"><button type="button" class="btn ' + (night ? 'btn-night' : 'btn-sage') + '" id="addBtn">Add to bag</button>' +
+              '<button type="button" class="iconbtn savebig" id="pdpSave" aria-pressed="false" aria-label="Save ' + esc(p.n) + '">' + heart + '</button></div>' +
+            '<p class="ship">Ships in [DISPATCH TIME]. Free exchanges within [NUMBER] days.</p>' +
+            '<div class="acc">' +
+              acc('The style', esc(p.d) + ' ' + STYLE_TXT[p.line][p.cat], true) +
+              acc('Fabric and care', esc(p.f) + '. ' + careFor(p.f)) +
+              acc('Size and fit', FIT_TXT) +
+              acc('Delivery and returns', 'We deliver across India in [DELIVERY TIME]. If the size is not right, exchange it free within [NUMBER] days. [RETURNS POLICY]') +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<section class="related" aria-labelledby="relTitle"><div class="sec-head"><div><p class="eyebrow">' + L.name + '</p><h2 id="relTitle">' + ((p.cat === 'Tops' || p.cat === 'Bottoms') ? 'Wear it with' : 'You may also like') + '</h2></div>' +
+          '<a class="textlink" href="#' + L.anchor + '">See the full collection ' + arrowSvg + '</a></div>' +
+          '<div class="grid">' + rel.map(function(q, i){ return cardHTML(p.line, q, i, (i * 3 + 1) % 8); }).join('') + '</div></section>' +
+      '</div>';
+    bindStage();
+    refreshOpts();
+    observeDye(pdpEl);
+  }
+  function refreshOpts(){
+    var fl = fabricList(), f = ps.fi >= 0 ? fl[ps.fi] : null;
+    document.getElementById('pdpSw').innerHTML = fl.map(function(x, i){
+      return '<button type="button" class="sw" data-fi="' + i + '" aria-label="' + x.name + '" aria-pressed="' + (i === ps.fi) + '"><span style="background:' + swatchBg(x) + '"></span></button>';
+    }).join('');
+    document.getElementById('fabName').textContent = f ? f.name + ' · ' + (ps.tab === 'solid' ? 'Solid' : 'Printed') : 'Shown as photographed';
+    [].slice.call(pdpEl.querySelectorAll('[data-ftab]')).forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-ftab') === ps.tab)); });
+    [].slice.call(pdpEl.querySelectorAll('[data-size]')).forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-size') === ps.size)); });
+    var steps = [['Mood', LINES[ps.p.line].mood, true], ['Style', ps.p.cat, true], ['Fabric', f ? f.name : 'Choose yours', !!f], ['Size', ps.size || 'Choose yours', !!ps.size]];
+    document.getElementById('journey').innerHTML = steps.map(function(st){
+      return '<li class="' + (st[2] ? 'done' : '') + '"><span>' + st[0] + '</span><b><i class="tick">' + (st[2] ? checkSvg : '') + '</i>' + st[1] + '</b></li>';
+    }).join('');
+  }
+  function setView(i){
+    var v = viewsFor(ps.p)[i];
+    ps.view = i;
+    var img = document.getElementById('stageImg');
+    img.style.transform = 'scale(' + v.z + ')'; img.style.transformOrigin = v.o;
+    document.getElementById('stageLabel').textContent = v.label;
+    [].slice.call(pdpEl.querySelectorAll('[data-view]')).forEach(function(b){ b.setAttribute('aria-pressed', String(+b.getAttribute('data-view') === i)); });
+  }
+  function bindStage(){
+    var stage = document.getElementById('stage'), img = document.getElementById('stageImg');
+    if (!(window.matchMedia && window.matchMedia('(hover: hover)').matches) || reduce) return;
+    stage.addEventListener('mousemove', function(e){
+      var r = stage.getBoundingClientRect();
+      stage.classList.add('zooming');
+      img.style.transformOrigin = ((e.clientX - r.left) / r.width * 100).toFixed(1) + '% ' + ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%';
+      img.style.transform = 'scale(2)';
+    });
+    stage.addEventListener('mouseleave', function(){ stage.classList.remove('zooming'); setView(ps.view); });
+  }
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('on'); }, 3600);
+  }
+  pdpEl.addEventListener('click', function(e){
+    var t = e.target.closest('button');
+    if (!t || !pdpEl.contains(t)) return;
+    if (t.id === 'pdpBack'){
+      if (inPage){ history.back(); } else { location.hash = LINES[ps.p.line].anchor; }
+      return;
+    }
+    if (t.hasAttribute('data-view')){ setView(+t.getAttribute('data-view')); return; }
+    if (t.hasAttribute('data-ftab')){ var nt = t.getAttribute('data-ftab'); if (nt !== ps.tab){ ps.tab = nt; ps.fi = 0; document.getElementById('fabHint').textContent = ''; refreshOpts(); showFabricPhoto(); } return; }
+    if (t.hasAttribute('data-fi')){ ps.fi = +t.getAttribute('data-fi'); document.getElementById('fabHint').textContent = ''; refreshOpts(); showFabricPhoto(); pdpEl.querySelector('[data-fi="' + ps.fi + '"]').focus(); return; }
+    if (t.hasAttribute('data-size')){ ps.size = t.getAttribute('data-size'); document.getElementById('sizeHint').textContent = ''; refreshOpts(); pdpEl.querySelector('[data-size="' + ps.size + '"]').focus(); return; }
+    if (t.id === 'sgBtn'){ var sg = document.getElementById('sg'); sg.hidden = !sg.hidden; t.setAttribute('aria-expanded', String(!sg.hidden)); t.textContent = sg.hidden ? 'Size guide' : 'Hide size guide'; return; }
+    if (t.id === 'pdpSave'){ var on = t.getAttribute('aria-pressed') !== 'true'; t.setAttribute('aria-pressed', String(on)); toast(on ? 'Saved to your favourites.' : 'Removed from your favourites.'); return; }
+    if (t.id === 'addBtn'){
+      if (ps.fi < 0){
+        document.getElementById('fabHint').textContent = 'Choose your fabric to add this to your bag.';
+        pdpEl.querySelector('[data-fi]').focus();
+        return;
+      }
+      if (!ps.size){
+        document.getElementById('sizeHint').textContent = 'Choose your size to add this to your bag.';
+        pdpEl.querySelector('[data-size]').focus();
+        return;
+      }
+      bag += 1;
+      bagN.hidden = false; bagN.textContent = bag;
+      bagBtn.setAttribute('aria-label', 'Your bag, ' + bag + (bag === 1 ? ' item' : ' items'));
+      toast('Added to your bag: ' + ps.p.n + ', ' + fabricList()[ps.fi].name + ', size ' + ps.size + '.');
+    }
+  });
+  /* Save hearts on product cards */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('.save');
+    if (!b) return;
+    var on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', String(on));
+  });
+
+  function jump(top){
+    var prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, top);
+    root.style.scrollBehavior = prev;
+  }
+  var styleEl = document.getElementById('stylepage'), curStyle = null;
+  var VIEWS = {home: homeEl, pdp: pdpEl, style: styleEl}, curView = 'home', curKey = (location.hash || '').slice(1), scrolls = {}, homeLeftKey = '';
+  function openView(name){
+    Object.keys(VIEWS).forEach(function(k){ VIEWS[k].hidden = k !== name; });
+    curView = name;
+  }
+  function showPDP(p, v){
+    ps = {p:p, tab: v >= 0 ? (v < 4 ? 'solid' : 'printed') : (p.pr >= 0 ? 'printed' : 'solid'), fi: v >= 0 ? v % 4 : -1, size:null, view:0, ticket:0};
+    renderPDP();
+    if (ps.fi >= 0) showFabricPhoto();
+    var h1 = document.getElementById('pdpTitle'); if (h1) h1.focus({preventScroll:true});
+  }
+  function showStyle(key){
+    curStyle = key;
+    var cat = KEY_CAT[key];
+    var others = Object.keys(KEY_CAT).filter(function(k){ return k !== key; });
+    styleEl.innerHTML = '<div class="wrap">' +
+      '<nav class="crumbs" aria-label="Breadcrumb"><a href="#top">Home</a><span aria-hidden="true">/</span><a href="#styles">Shop by style</a><span aria-hidden="true">/</span><span>' + cat + '</span></nav>' +
+      '<div class="sec-head"><div><p class="eyebrow">Shop by style</p><h1 class="style-h1" id="styleTitle" tabindex="-1">' + cat + '</h1>' +
+        '<p class="intro-p">Six Noon and six Night styles, each in four solid and four printed fabrics.</p></div></div>' +
+      '<div class="coll" id="styleColl"></div>' +
+      '<nav class="style-other" aria-label="Other styles"><span class="eyebrow">More styles</span>' +
+        others.map(function(k){ return '<a class="textlink" href="#s-' + k + '">' + KEY_CAT[k] + ' ' + arrowSvg + '</a>'; }).join('') +
+      '</nav></div>';
+    buildColl(document.getElementById('styleColl'), {
+      key:'style', label:'Filter by collection',
+      chips: [{label:'All', val:'all'}, {label:'Noon collection', val:'noon'}, {label:'Night collection', val:'night'}],
+      items: function(val){
+        var a = products.noon.filter(function(q){ return q.cat === cat; }), b = products.night.filter(function(q){ return q.cat === cat; });
+        if (val === 'noon') return a;
+        if (val === 'night') return b;
+        var m = []; for (var i = 0; i < a.length; i++){ m.push(a[i], b[i]); } return m;
+      }
+    });
+    var t = document.getElementById('styleTitle'); if (t) t.focus({preventScroll:true});
+  }
+  var PDP_RE = /^p-((?:noon|night)-(?:tops|bottoms|coords|dresses)-\d)(?:-f(\d))?$/, STYLE_RE = /^s-(tops|bottoms|coords|dresses)$/;
+  function route(){
+    var h = (location.hash || '').slice(1), m;
+    scrolls[curView === 'home' ? 'home' : curKey] = window.scrollY;
+    var fromView = curView;
+    if ((m = PDP_RE.exec(h)) && byId[m[1]]){
+      if (playing) endIntro();
+      if (fromView === 'home') homeLeftKey = curKey;
+      openView('pdp');
+      showPDP(byId[m[1]], m[2] != null ? +m[2] : -1);
+      jump(0);
+    } else if ((m = STYLE_RE.exec(h))){
+      if (playing) endIntro();
+      if (fromView === 'home') homeLeftKey = curKey;
+      openView('style');
+      if (curStyle !== m[1]){ showStyle(m[1]); jump(0); }
+      else { jump(scrolls[h] || 0); }
+    } else {
+      if (fromView !== 'home'){
+        openView('home');
+        var target = h && document.getElementById(h);
+        if (h === homeLeftKey || !target){ jump(scrolls.home || 0); }
+        else { jump(target.getBoundingClientRect().top + window.scrollY - 72); }
+      }
+    }
+    curKey = h;
+    onScroll();
+  }
+  initCollections();
+  window.addEventListener('hashchange', function(){ inPage = true; route(); });
+  route();
+
+  /* ---------- Fabric picker ---------- */
+  var fabrics = {
+    solid: [
+      {name:'Sage', bg:'#9CAF94'}, {name:'Ivory', bg:'#EFE8DA'}, {name:'Indigo', bg:'#3B4A6B'},
+      {name:'Ochre', bg:'#C9973F'}, {name:'Magenta', bg:'#8E1F5E'}, {name:'Charcoal', bg:'#3A3536'}
+    ],
+    printed: [
+      {name:'Sage stripe', bg:'repeating-linear-gradient(45deg, #9CAF94 0 14px, #F7F3EC 14px 28px)'},
+      {name:'Indigo dot', bg:'radial-gradient(#F7F3EC 18%, rgba(0,0,0,0) 21%) 0 0 / 34px 34px, #3B4A6B'},
+      {name:'Magenta check', bg:'linear-gradient(90deg, rgba(247,243,236,.45) 50%, rgba(247,243,236,0) 50%) 0 0 / 56px 56px, linear-gradient(rgba(247,243,236,.45) 50%, rgba(247,243,236,0) 50%) 0 0 / 56px 56px, #8E1F5E'},
+      {name:'Ochre stripe', bg:'repeating-linear-gradient(90deg, #C9973F 0 10px, #F7F3EC 10px 22px)'}
+    ]
+  };
+  var swEl = document.getElementById('swatches'), cloth = document.getElementById('cloth');
+  var cap = document.getElementById('clothCap'), pickedName = document.getElementById('pickedName');
+  var tabBtns = [].slice.call(document.querySelectorAll('#fabric .tabs button'));
+  var layers = {};
+  Object.keys(fabrics).forEach(function(k){
+    fabrics[k].forEach(function(f, i){
+      var l = document.createElement('div'); l.className = 'cloth-layer'; l.style.background = f.bg;
+      cloth.insertBefore(l, cap); layers[k + i] = l;
+    });
+  });
+  var fstate = {tab:'solid', i:0};
+  function renderFabric(){
+    var fl = fabrics[fstate.tab];
+    swEl.textContent = '';
+    fl.forEach(function(f, i){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'sw'; b.setAttribute('aria-label', f.name);
+      b.setAttribute('aria-pressed', String(i === fstate.i));
+      var s = document.createElement('span'); s.style.background = f.bg; b.appendChild(s);
+      b.addEventListener('click', function(){ fstate.i = i; renderFabric(); });
+      swEl.appendChild(b);
+    });
+    Object.keys(layers).forEach(function(k){ layers[k].classList.toggle('on', k === fstate.tab + fstate.i); });
+    pickedName.textContent = fl[fstate.i].name;
+    cap.textContent = fl[fstate.i].name;
+    tabBtns.forEach(function(t){ t.setAttribute('aria-pressed', String(t.getAttribute('data-tab') === fstate.tab)); });
+  }
+  tabBtns.forEach(function(t){ t.addEventListener('click', function(){ fstate.tab = t.getAttribute('data-tab'); fstate.i = 0; renderFabric(); }); });
+  renderFabric();
+
+  /* ---------- Waitlist (front end only for now) ---------- */
+  document.getElementById('joinForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var input = document.getElementById('email'), out = document.getElementById('thanks');
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+    out.textContent = ok ? 'Thank you. You are on the list.' : 'Please enter a full email address, like name@example.com.';
+    if (ok) input.value = '';
+  });
+
+  /* ---------- Reveal and steps ---------- */
+  var steps = document.getElementById('steps');
+  if (!reduce && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        en.target.classList.remove('wait');
+        if (en.target === steps) steps.classList.add('go');
+        io.unobserve(en.target);
+      });
+    }, {rootMargin:'0px 0px -12% 0px'});
+    [].slice.call(document.querySelectorAll('.rv')).forEach(function(el){
+      if (el.getBoundingClientRect().top > window.innerHeight){ el.classList.add('wait'); io.observe(el); }
+    });
+    io.observe(steps);
+  } else { steps.classList.add('go'); }
+
+  /* ---------- Header state ---------- */
+  var darkZones = [].slice.call(document.querySelectorAll('.ftr, .moods'));
+  var ticking = false;
+  function frame(){
+    ticking = false;
+    var heroBottom = heroEl.getBoundingClientRect().bottom;
+    var solid = heroBottom < 90 || !sheet.hidden;
+    hdr.classList.toggle('solid', solid);
+    var dark = darkZones.some(function(el){ if (el.id === 'pdp' && !el.classList.contains('dark-zone')) return false; var r = el.getBoundingClientRect(); return r.top <= 76 && r.bottom > 76; });
+    hdr.classList.toggle('dark', dark);
+  }
+  function onScroll(){ if (!ticking){ ticking = true; requestAnimationFrame(frame); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  frame();
+})();
+</script>
